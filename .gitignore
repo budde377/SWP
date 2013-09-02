@@ -1,10 +1,10 @@
-QuickPoll/build
+/QuickPoll/build
 /.git
-QuickPoll/.settings
-QuickPoll/.classpath
-QuickPoll/.project
-QuickPoll/build
-QuickPoll/WebContent/META-INF
+/QuickPoll/.settings
+/QuickPoll/.classpath
+/QuickPoll/.project
+/QuickPoll/build
+/QuickPoll/WebContent/META-INF
 /bin
 /.settings
 /.classpath
