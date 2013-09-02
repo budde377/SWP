@@ -1,5 +1,9 @@
-/build
+QuickPoll/build
 /.git
+QuickPoll/.settings
+QuickPoll/.classpath
+QuickPoll/.project
+QuickPoll/WebContent/META-INF
+/bin
 /.settings
 /.classpath
-/.project
