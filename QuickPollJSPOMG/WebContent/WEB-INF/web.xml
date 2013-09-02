@@ -1,4 +1,29 @@
 <web-app xmlns="http://java.sun.com/xml/ns/j2ee" version="2.4">
 
-  <display-name>Quick Poll</display-name>
+ 	<display-name>Quick Poll</display-name>
+ 	
+ 	 <welcome-file-list>
+        <welcome-file>QuickPollQuestion.html</welcome-file>
+    </welcome-file-list>
+ 	<servlet>
+ 		<servlet-name>controller</servlet-name>
+ 		<servlet-class>Controller</servlet-class>
+ 	</servlet>
+ 	<servlet-mapping>
+ 		<servlet-name>controller</servlet-name>
+ 		<url-pattern>/results</url-pattern>
+ 	</servlet-mapping>
+ 	<servlet-mapping>
+ 		<servlet-name>controller</servlet-name>
+ 		<url-pattern>/vote</url-pattern>
+ 	</servlet-mapping>
+ 	<servlet-mapping>
+ 		<servlet-name>controller</servlet-name>
+ 		<url-pattern>/setup</url-pattern>
+ 	</servlet-mapping>
+ 	<servlet-mapping>
+ 		<servlet-name>controller</servlet-name>
+ 		<url-pattern>/ask</url-pattern>
+ 	</servlet-mapping>
+ 
 </web-app>
