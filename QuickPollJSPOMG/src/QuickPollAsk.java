@@ -5,10 +5,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 @WebServlet("/ask")
-<<<<<<< HEAD
 
-=======
->>>>>>> 73ac21c6991dbbb6e957adf6e289e870378d9553
 public class QuickPollAsk extends HttpServlet {
   public void doGet(HttpServletRequest request, 
                     HttpServletResponse response)

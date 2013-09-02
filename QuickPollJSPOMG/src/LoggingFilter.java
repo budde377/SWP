@@ -2,17 +2,10 @@ import java.io.*;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-<<<<<<< HEAD
 import javax.servlet.http.*;
 
 @WebFilter("/*")
 
-=======
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.*;
-
-@WebFilter("/*")
->>>>>>> 73ac21c6991dbbb6e957adf6e289e870378d9553
 public class LoggingFilter implements Filter {
   ServletContext context;
   int counter;
