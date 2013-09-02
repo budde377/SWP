@@ -1,7 +1,7 @@
 <web-app xmlns="http://java.sun.com/xml/ns/j2ee" version="2.4">
 
   <display-name>Quick Poll</display-name>
-
+<!-- 
 	<filter>
 		<filter-name>Logging filter</filter-name>
 		<filter-class>LoggingFilter</filter-class>
@@ -46,5 +46,5 @@
     <servlet-name>Results</servlet-name>
     <url-pattern>/results</url-pattern>
   </servlet-mapping>
-
+ -->
 </web-app>
