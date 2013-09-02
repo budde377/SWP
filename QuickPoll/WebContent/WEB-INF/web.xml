@@ -2,6 +2,15 @@
 
   <display-name>Quick Poll</display-name>
 
+	<filter>
+		<filter-name>Logging filter</filter-name>
+		<filter-class>LoggingFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>Logging filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
   <servlet>
     <servlet-name>Setup</servlet-name>
     <servlet-class>QuickPollSetup</servlet-class>
