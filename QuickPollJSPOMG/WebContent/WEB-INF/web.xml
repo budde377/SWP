@@ -1,0 +1,62 @@
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" version="2.4">
+
+  <display-name>Quick Poll</display-name>
+<<<<<<< HEAD
+	<filter>
+		<filter-name>My Logging Filter</filter-name>
+		<filter-class>LoggingFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>My Logging Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+=======
+<!-- 
+	<filter>
+		<filter-name>Logging filter</filter-name>
+		<filter-class>LoggingFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>Logging filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+  <servlet>
+    <servlet-name>Setup</servlet-name>
+    <servlet-class>QuickPollSetup</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Setup</servlet-name>
+    <url-pattern>/setup</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>Ask</servlet-name>
+    <servlet-class>QuickPollAsk</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Ask</servlet-name>
+    <url-pattern>/ask</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>Vote</servlet-name>
+    <servlet-class>QuickPollVote</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Vote</servlet-name>
+    <url-pattern>/vote</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>Results</servlet-name>
+    <servlet-class>QuickPollResults</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Results</servlet-name>
+    <url-pattern>/results</url-pattern>
+  </servlet-mapping>
+ -->
+>>>>>>> 73ac21c6991dbbb6e957adf6e289e870378d9553
+</web-app>
