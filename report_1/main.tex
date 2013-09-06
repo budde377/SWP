@@ -31,7 +31,7 @@
 % Reaktionsskemaer. Læs manualen for at se eksempler.
 % Manual: http://www.ctan.org/tex-archive/macros/latex/contrib/mhchem/mhchem.pdf
 %\usepackage[version=3]{mhchem}
-\author{Christian Budde Christensen, 20103616}
+\author{Lau Skorstengaard, 20103173 \\Christian Budde Christensen, 20103616}
 \title{Serverbaseret Webprogrammering\\1. Aflevering}
 
 \begin{document}
@@ -40,6 +40,17 @@
 Der tilføjedes annotationerne \texttt{@WebServlet("/ask")}, \texttt{@WebServlet("/ask")}, \texttt{@WebServlet("/results")}, \texttt{@WebServlet("/setup")} og \texttt{@WebServlet("/vote")} til hhv. \texttt{QuickPollAsk.java}, \texttt{QuickPollResults.java}, \texttt{QuickPollSetup.java} og \texttt{QuickPollVote.java}. Disse erstatter \texttt{servlet} og \texttt{servlet-mapping} elementerne i \texttt{web.xml} konfigurationsfilen, og sørger for vidrestillese af brugeren forespørgsel til den relevante resource. \\
 Dessuden tilføjedes annotationen \texttt{@WebFilter(/*)} til filen \texttt{LoggingFilter.java}, som der sørger for at tilføje filteret til alle forgespørgelser.\\
 
+\section*{Opgave 4}
+Opgave 4 beder om en reimplementering af QuickPoll, hvor der er anvendt MVC og JSP uden java i viewet. I vores implementering af MVC er JSP filerne viewet, ligesom der bliver bedt om i opgaven, modellen er klassen \texttt{CurrentQuestion} og controlleren er klassen \texttt{Controller}. I det nedenstående vil vi kort fortælle hvad de enkelte deles ansvar er, samt kort diskutere eventuelle problematikker.
+
+Modellen i implementeringen, \texttt{CurrentQuestion}, er en klasse, vi ansvar er at håndtere den relevante data. Den er specialiseret til at håndtere Quick Polls behov, hvilket betyder, at den ikke helt overholder de konventioner der er for en JavaBean\footnote{Her referes til de konventioner, der findes på http://en.wikipedia.org/wiki/JavaBeans} i kraft af, at der er en getter \texttt{getTotal} og ``setters'' \texttt{voteYes} og \texttt{voteNo}, som ikke er traditionelle setters. Ved at lave en specialiseret klasse, så tages lidt af ansvaret for at lave de beregninger væk fra controlleren og viewet. Havde det været et større projekt kan det give problemer ikek at have klart opdelt ansvaret, da det kan give en ``bloatet'' klasse. I QuickPoll kunne et alternativ til at have en \texttt{CurrentQuestion} kunne være at gemme de nødvendige data i server konteksten, hvilket dog gør det knap så eksplicit, hvad modellen i MVC består i.
+
+Controlleren er i vores implementering  klassen\texttt{Controller}. Det kan diskuteres, om Web.xml ikke også er en del af controlleren, da den er med til at fortælle hvilken del af viewet man skal se. \texttt{Controller} har dog alene ansvaret for at opdatere modellen.
+
+Vores view er implementeret som JSP-filer. Her er det værd at nævne QuickPollResults.jsp, som håndterer tilfældet, hvor der ikke er stemmer såvel som det, hvor der er. Dette lægger umiddelbart op til, at jsp-filen indeholder java, men vi har omgået dette ved at bruge JSTLs ``when-otherwise''-konstruktion. Dette er lidt at omgå kravene, når man bliver bedt om java løse filer, endvidere er det også at gå væk fra at være deklarativ i JSP filerne, da vi begynder at styre noget control flow. Alternativt kunne vi have brugt den conditional der er i expression language\footnote{S. 28 i specifikationen}, hvilket vi dog ikke forsøgte, og dermed ikke ved om det ville give problemer. En sidste løsning kunne være at lave endnu en JSP fil, som bliver brugt når der ingen stemmer er, og lade controlleren sørge for at håndtere hvilken situation vi er i.
+
+
+%view: jstl vs conditional i el  vs java
 
 \end{document}
 
