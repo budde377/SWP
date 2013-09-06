@@ -1,5 +1,5 @@
 
-public class CurrentQuestion {
+public class CurrentQuestion implements java.io.Serializable{
 	private int yes = 0, no = 0 ;
 	private String question;
 	
