@@ -1,8 +1,4 @@
-<html>
-	<head><title>QuickPoll</title></head>
-	<body>
-		<h1>QuickPoll</h1>
-		Your question has been registered.
-		Let the vote begin!
-	</body>
-</html>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<t:wrap title="QuickPoll">
+Your question has been registered. Let the vote begin!
+</t:wrap>
