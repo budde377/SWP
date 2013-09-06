@@ -1,7 +1,5 @@
-<html>
-	<head><title>QuickPoll</title></head>
-	<body>
-    	<h1>QuickPoll</h1>
-        Thank you for your vote!
-   	</body>
-</html>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags"%>
+<t:wrap title="Quick Poll">
+${question }
+Thank you for your vote!
+</t:wrap>
