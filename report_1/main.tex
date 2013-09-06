@@ -32,9 +32,14 @@
 % Manual: http://www.ctan.org/tex-archive/macros/latex/contrib/mhchem/mhchem.pdf
 %\usepackage[version=3]{mhchem}
 \author{Christian Budde Christensen, 20103616}
-\title{Server based Web programming\\1. Aflevering}
+\title{Serverbaseret Webprogrammering\\1. Aflevering}
 
 \begin{document}
+\maketitle
+\section*{Opgave 3}
+Der tilføjedes annotationerne \texttt{@WebServlet("/ask")}, \texttt{@WebServlet("/ask")}, \texttt{@WebServlet("/results")}, \texttt{@WebServlet("/setup")} og \texttt{@WebServlet("/vote")} til hhv. \texttt{QuickPollAsk.java}, \texttt{QuickPollResults.java}, \texttt{QuickPollSetup.java} og \texttt{QuickPollVote.java}. Disse erstatter \texttt{servlet} og \texttt{servlet-mapping} elementerne i \texttt{web.xml} konfigurationsfilen, og sørger for vidrestillese af brugeren forespørgsel til den relevante resource. \\
+Dessuden tilføjedes annotationen \texttt{@WebFilter(/*)} til filen \texttt{LoggingFilter.java}, som der sørger for at tilføje filteret til alle forgespørgelser.\\
+
 
 \end{document}
 

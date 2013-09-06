@@ -20,7 +20,7 @@ public class QuickPollAsk extends HttpServlet {
     out.print(question+"?<p>");
     out.print("<input name=vote type=radio value=yes> yes<br>"+
               "<input name=vote type=radio value=no> no<p>"+
-              "<input type=submit name=submit value=Vote>"+
+              "<input type=submit name=submit value=Vosete>"+
               "</form>"+
               "</body></html>");
   }
