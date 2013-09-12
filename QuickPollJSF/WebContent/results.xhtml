@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<c:choose xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core" template="template.xhtml">
+	<c:when test="#{poll.yes + poll.no == 0}">
+		<f:event type="preRenderView"
+			 listener="#{poll.checkQuestion}" /> 
+		<ui:decorate template="template.xhtml">
+			<ui:define name="content">
+				No votes have been cast yet!
+			</ui:define>
+		</ui:decorate>
+	</c:when>
+	<c:otherwise>
+		<f:event type="preRenderView"
+			 listener="#{poll.checkQuestion}" /> 
+		<ui:decorate template="template.xhtml">
+			<ui:define name="content">
+				#{poll.question}?
+        	<table border="0">
+					<tr>
+						<td>Yes:</td>
+						<td>
+							<table>
+								<tr>
+									<td bgcolor="black" height="20"
+										width="${poll.yes*300 / (poll.yes + poll.no)}"></td>
+								</tr>
+							</table>
+						</td>
+						<td>#{poll.yes}</td>
+					</tr>
+					<tr>
+						<td>No:</td>
+						<td>
+							<table>
+								<tr>
+									<td bgcolor="black" height="20"
+										width="${poll.no*300 / (poll.yes + poll.no)}"></td>
+								</tr>
+							</table>
+						</td>
+						<td>#{poll.no}</td>
+					</tr>
+				</table>
+			</ui:define>
+		</ui:decorate>
+	</c:otherwise>
+</c:choose>

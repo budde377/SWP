@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf13788183448060" configfile="/QuickPollJSF/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="ask.xhtml" x="84" y="84" id="pf13788256478784" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" outlinks="pf13788256478785 pf13788257982298" inlinks="pf13788257982298 pf137882682872417" path="/ask.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="vote.xhtml" x="600" y="324" id="pf13788256478786" referenceLink="//@navigationRule.3/@fromViewId|" outlinks="pf137882688728420" inlinks="pf13788256478785" path="/vote.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="setup.xhtml" x="58" y="192" id="pf137882682872418" referenceLink="//@navigationRule.1/@navigationCase.0/@toViewId|" outlinks="pf137882682872417" inlinks="pf137882708666622" path="/setup.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="results.xhtml" x="204" y="48" id="pf137882688728421" referenceLink="//@navigationRule.3/@navigationCase.0/@toViewId|" inlinks="pf137882688728420" path="/results.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="question.xhtml" x="168" y="259" id="pf137882708666623" referenceLink="//@navigationRule.1/@fromViewId|" outlinks="pf137882708666622" path="/question.xhtml"/>
+  <links id="pf13788256478785" target="pf13788256478786" source="pf13788256478784" outcome="VOTE" redirect="true"/>
+  <links id="pf13788257982298" target="pf13788256478784" source="pf13788256478784" outcome="NOVOTE" redirect="true"/>
+  <links id="pf137882682872417" target="pf13788256478784" source="pf137882682872418" outcome="ASK" redirect="true"/>
+  <links id="pf137882688728420" target="pf137882688728421" source="pf13788256478786" outcome="RESULT" redirect="true"/>
+  <links id="pf137882708666622" target="pf137882682872418" source="pf137882708666623" outcome="DONE" redirect="true"/>
+</pageflow:Pageflow>

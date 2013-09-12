@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+    version="2.2">
+    <navigation-rule>
+    	<from-view-id>/ask.xhtml</from-view-id>
+    	<navigation-case>
+    		<from-outcome>VOTE</from-outcome>
+    		<to-view-id>/vote.xhtml</to-view-id>
+    		<redirect/>
+    	</navigation-case>
+    	<navigation-case>
+    		<from-outcome>NOVOTE</from-outcome>
+    		<to-view-id>/ask.xhtml</to-view-id>
+    		<redirect/>
+    	</navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+    	<from-view-id>/question.xhtml</from-view-id>
+    	<navigation-case>
+    		<from-outcome>DONE</from-outcome>
+    		<to-view-id>/setup.xhtml</to-view-id>
+    		<redirect/>
+    	</navigation-case>
+   	</navigation-rule>
+   	    <navigation-rule>
+    	<from-view-id>/setup.xhtml</from-view-id>
+    	<navigation-case>
+    		<from-outcome>ASK</from-outcome>
+    		<to-view-id>/ask.xhtml</to-view-id>
+    		<redirect/>
+    	</navigation-case>
+   	</navigation-rule>		  	
+   	<navigation-rule>
+    	<from-view-id>/vote.xhtml</from-view-id>
+    	<navigation-case>
+    		<from-outcome>RESULT</from-outcome>
+    		<to-view-id>/results.xhtml</to-view-id>
+    		<redirect/>
+    	</navigation-case>
+   	</navigation-rule>		   	
+
+</faces-config>
