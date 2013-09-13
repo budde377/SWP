@@ -36,21 +36,37 @@
 
 \begin{document}
 \maketitle
-\section*{Opgave 3}
-Der tilføjedes annotationerne \texttt{@WebServlet("\//ask")}, \texttt{@WebServlet("\//results")}, \texttt{@WebServlet("\//setup")} og \texttt{@WebServlet("\//vote")} til hhv. \texttt{QuickPollAsk.java}, \texttt{QuickPollResults.java}, \\ \texttt{QuickPollSetup.java} og \texttt{QuickPollVote.java}. Disse erstatter \texttt{servlet} og \texttt{servlet-mapping} elementerne i \texttt{web.xml} konfigurationsfilen, og sørger for vidrestillese af brugerens forespørgsel til den relevante resource. \\
-Dessuden tilføjedes annotationen \texttt{@WebFilter(/*)} til filen \texttt{LoggingFilter.java}, som der sørger for at tilføje filteret til alle forgespørgelser.\\
+%Based on the Struts and JSF versions of The Number Guessing Game, describe the main similarities and differences between Struts and JSF. In addition, you should study the Spring MVC framework (a part of Spring) and compare it with Servlets, JSP, Struts and JSF. 
+\begin{comment}
+Spring bruger web.xml til mapping i stil med JSP og Servlets (men ikke som struts og jsf, der bruger struts.xml og faces-config.xml hhv., endvidere er det muligt at lave mapping i filerne med anotation i stil med Servlets). 
+Controllers i Spring er lavet i almindelige javaklasser med annotation @Controller.
+Spring controller fortæller hvilken model/view der skal bruges.
+I Spring er Model et map.
+View kan ``udskrives'' direkte fra controller (eller man kan bruge jsp e.l. og få den til at præsentere det map man har)
+Konklusion: minder lidt om servlets?
+\end{comment}
 
-\section*{Opgave 4}
-Opgave 4 beder om en reimplementering af QuickPoll, hvor der er anvendt MVC og JSP uden java i viewet. I vores implementering af MVC er JSP filerne viewet, ligesom der bliver bedt om i opgaven, modellen er klassen \texttt{CurrentQuestion} og controlleren er klassen \texttt{Controller}. I det nedenstående vil vi kort fortælle hvad de enkelte deles ansvar er, samt kort diskutere eventuelle problematikker.
+Spring sammenlignet med Servlets
+Spring minder på mange måder om Servlets. Begge bruger web.xml eller annotation til at mappe forespørgsler til den rigtige Controller eller Servlet (alt efter om det er Spring eller Servlets), som der så håndterer forespørgselen ved at ændre modellen og derefter enten direkte sende et view tilbage til brugeren, eller bede en JSP side eller lignende om at gøre det. En lille forskel er umiddelbart, hvordan det rigtige view bliver valgt. I servlets ville man lave et redirect til den ønskede JSP-side, hvor man i Spring returnerer et \texttt{ModelAndView} objekt, som bliver givet videre til en view resolver, der finder det rigtige view og giver den, modellen.
 
-Modellen i implementeringen, \texttt{CurrentQuestion}, er en klasse, hvis ansvar er at håndtere den relevante data. Den er specialiseret til at håndtere Quick Polls behov, hvilket betyder, at den ikke helt overholder de konventioner der er for en JavaBean\footnote{Her referes til de konventioner, der findes på http://en.wikipedia.org/wiki/JavaBeans} i kraft af, at der er en getter \texttt{getTotal} og ``setters'' \texttt{voteYes} og \texttt{voteNo}, som ikke er traditionelle setters. Ved at lave en specialiseret klasse, så tages ansvaret for at beregne total af stemmerne, samt at tælle stemmerne op, væk fra controlleren og viewet. Havde det været et større projekt kan det give problemer ikke at have klart opdelt ansvaret, da det kan give en ``bloatet'' klasse. I QuickPoll kunne et alternativ til at have en \texttt{CurrentQuestion} kunne være at gemme de nødvendige data i server konteksten, hvilket dog gør det knap så eksplicit, hvad modellen i MVC består i.
+For at konkludere så er der ikke nogen stor forskel på Servlets og Spring.
 
-Controlleren er i vores implementering  klassen\texttt{Controller}. Det kan diskuteres, om Web.xml ikke også er en del af controlleren, da den er med til at fortælle hvilken del af viewet man skal se. \texttt{Controller} har dog alene ansvaret for at opdatere modellen.
+Spring sammenlignet med JSP
+Hvis man laver en ren JSP side, hvor der ikke er nogen Servlets, fordi java koden er i de enkelte JSP-sider, så er der nogle flere forskelle end der var med Servlets. Nu har vi nemlig view og controller blandet sammen, da JSP-siderne står for at ændre i modellen samt præsentere hver side og dermed en relevant del af modellen. Til sammenligning er ansvaret delt en del mere op i Spring frameworket, hvis det er kombineret med noget til at håndtere viewet (eksempelvis JSP). Er det ikke kombineret med det, så er view og controller igen blandet sammen, da controlleren så håndterer alt arbejdet.
 
-Vores view er implementeret som JSP-filer. Her er det værd at nævne QuickPollResults.jsp, som håndterer tilfældet, hvor der ikke er stemmer såvel som det, hvor der er. Dette lægger umiddelbart op til, at jsp-filen indeholder java, men vi har omgået dette ved at bruge JSTLs ``when-otherwise''-konstruktion. Dette er lidt at omgå kravene, når man bliver bedt om java løse filer, endvidere er det også at gå væk fra at være deklarativ i JSP filerne, da vi begynder at styre noget control flow. Alternativt kunne vi have brugt den conditional der er i expression language\footnote{S. 28 i specifikationen}, hvilket vi dog ikke forsøgte, og dermed ikke ved om det ville give problemer. En sidste løsning kunne være at lave endnu en JSP fil, som bliver brugt når der ingen stemmer er, og lade controlleren sørge for at håndtere hvilken situation vi er i.
+Et fælles træk ved JSP, Servlets og Spring, hvor der er brugt annotation til at mappe requests, er at det ved større sider kan blive uoverskueligt, hvordan flowet helt præcist er. Endvidere, hvis man vil ændre i det, så skal man besøge alle de filer, der skal mappes på en ny måde, og man risikerer hurtigt at miste overblikket.
 
 
-%view: jstl vs conditional i el  vs java
+Spring sammenlignet med JSF.
+I JSF er mappingen af sider beskrevet i faces-config.xml, hvilket er lidt anderledes end for Spring. Det der gør det anerledes er, at man her ikke bare mapper en URL til en controller, men man opbygger en FSA, som fotæller hvordan flowet på siden er. Man får derfor et bedre overblik over flowet på siden, og kan nemt rette i det, hvis det bliver nødvendigt. Dog skal man forbi controlleren, da den returnerer en streng, der fortæller hvilket view, man skal gå til. I JSF har man i viewet god mulighed for at bruge expression language, hvilket betyder, at man har god mulighed for at lave nogle beregninger i viewet. Dette er umiddelbart også muligt i Spring, hvis man bruger det sammen med JSP.
+
+Da controlleren fortæller en dispatcher, hvilket view det er man vil se, så minder de to frameworks om hinanden på det punkt.
+
+Spring sammenlignet med Struts.
+Ligesom JSF har struts en lille FSA i kraft af struts.xml, som afgør flowet på siden. Ligesom ved JSF, så afgører Controlleren hvilket view der skal vises ved at sende en respons streng tilbage, som struts.xml bruger til at vælge viewet. I Struts skal controlleren stå for at klargøre den data, der skal vises i viewet, da man her ikke har adgang til et expression langugage i stil med det i JSF og JSP, og dermed er der her en afvigelse i forhold til Spring, hvis man bruger det sammen med JSP.
+
+%Regarding the differences, explain whether one of the frameworks has advantages over the other, for example with respect to code maintainability (i.e., if there are things the programmer must consider when using one framework but not the other). 
+%Note: it may be useful to consult online documentation to properly understand the two example applications, however it is not necessary to consider features of the frameworks that are not used in these applications. Expected: 3 page.
 
 \end{document}
 
