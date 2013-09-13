@@ -12,7 +12,7 @@
 		<h:form>
 			<h:selectOneRadio value="#{poll.vote}">
 				<f:selectItem itemValue="yes" itemLabel="Yes" />
-				<f:selectItem itemValue="yes" itemLabel="No"/>
+				<f:selectItem itemValue="no" itemLabel="No"/>
 			</h:selectOneRadio>
 			<h:commandButton action="#{poll.decideVote}" value="Submit" />
 		</h:form>

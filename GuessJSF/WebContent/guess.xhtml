@@ -3,14 +3,24 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:f="http://java.sun.com/jsf/core"
       template="template.xhtml">
   <ui:define name="content">
     <p>
       #{game.message}:
     </p>
     <h:form>
-      <h:inputText size="2" maxlength="2" value="#{game.number}"/>
+      <h:inputText size="2" maxlength="2" value="#{game.number}"
+      	required="true"
+      	requiredMessage="You must make a guess"
+      	converterMessage="You guess must be an integer"
+      	validatorMessage="Your guess must be an integer between 0 and 100"
+      	id="guess">
+      	<f:validateLongRange minimum="0" maximum="100" />
+      </h:inputText>
       <h:commandButton value="Guess" action="#{game.makeGuess}"/>
     </h:form>
+    <br />
+    <h:message for="guess" />
   </ui:define>
 </ui:composition>

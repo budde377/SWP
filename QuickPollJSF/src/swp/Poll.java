@@ -35,7 +35,7 @@ public class Poll implements Serializable {
 			return "VOTE";
 		} else if ("no".equals(vote)) {
 			no++;
-			return "VOTe";
+			return "VOTE";
 		}
 		return "NOVOTE";
 	}
