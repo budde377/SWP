@@ -36,21 +36,21 @@
 
 \begin{document}
 \maketitle
-\section*{Opgave 3}
-Der tilføjedes annotationerne \texttt{@WebServlet("\//ask")}, \texttt{@WebServlet("\//results")}, \texttt{@WebServlet("\//setup")} og \texttt{@WebServlet("\//vote")} til hhv. \texttt{QuickPollAsk.java}, \texttt{QuickPollResults.java}, \\ \texttt{QuickPollSetup.java} og \texttt{QuickPollVote.java}. Disse erstatter \texttt{servlet} og \texttt{servlet-mapping} elementerne i \texttt{web.xml} konfigurationsfilen, og sørger for vidrestillese af brugerens forespørgsel til den relevante resource. \\
-Dessuden tilføjedes annotationen \texttt{@WebFilter(/*)} til filen \texttt{LoggingFilter.java}, som der sørger for at tilføje filteret til alle forgespørgelser.\\
+\section*{Opgave 1}
+Sammenlignes JSF og Struts ift. hvordan de implementerer MVC-patterenet har JSF en mere direkte adskillelse mellem modellen, viewet og controlleren. Her består modellen af beans, mens viewet består af \texttt{jsf} sider. Controlleren gemt væk i FacesServlet'en, og viewet bestemmer mere direkte hvordan modellen skal opdateres, ved at knytte værdier i modellen, til dele af viewet, og bestemme hvilke metoder der skal kaldes når en formular ``submittes'', på en meget deklarativ måde. Controlleren er på den måde blevet reduceret til en \texttt{faces-config.xml} fil og et requests vej gennem serveren er ikke klar for implementøren af applikationen. En side-effect af denne abstraktion ses på klientens URL, der ikke altid giver mening ift. hvilken side man er på, da en form sender post-request til sig selv.
 
-\section*{Opgave 4}
-Opgave 4 beder om en reimplementering af QuickPoll, hvor der er anvendt MVC og JSP uden java i viewet. I vores implementering af MVC er JSP filerne viewet, ligesom der bliver bedt om i opgaven, modellen er klassen \texttt{CurrentQuestion} og controlleren er klassen \texttt{Controller}. I det nedenstående vil vi kort fortælle hvad de enkelte deles ansvar er, samt kort diskutere eventuelle problematikker.
+I Stuts er adskildelsen mellem view og controller mere flydende. Her sørger controlleren i højere grad for at bygge viewet vha. Actions. Denne action-baseret tilgang gør at håndteringen af et request bliver langt mere transparent. Når et request bliver modtaget af serveren, kaldes den rette action. Den konstruerer så et response, som sendes direkte tilbage til klienten.
 
-Modellen i implementeringen, \texttt{CurrentQuestion}, er en klasse, hvis ansvar er at håndtere den relevante data. Den er specialiseret til at håndtere Quick Polls behov, hvilket betyder, at den ikke helt overholder de konventioner der er for en JavaBean\footnote{Her referes til de konventioner, der findes på http://en.wikipedia.org/wiki/JavaBeans} i kraft af, at der er en getter \texttt{getTotal} og ``setters'' \texttt{voteYes} og \texttt{voteNo}, som ikke er traditionelle setters. Ved at lave en specialiseret klasse, så tages ansvaret for at beregne total af stemmerne, samt at tælle stemmerne op, væk fra controlleren og viewet. Havde det været et større projekt kan det give problemer ikke at have klart opdelt ansvaret, da det kan give en ``bloatet'' klasse. I QuickPoll kunne et alternativ til at have en \texttt{CurrentQuestion} kunne være at gemme de nødvendige data i server konteksten, hvilket dog gør det knap så eksplicit, hvad modellen i MVC består i.
+Ift. code-maintainability, så er gør abstraktionsniveauet i JSF det meget let at fx ændre i modellen og repræsentere ændringerne i viewet. Tilføjes eksempelvis et felt til modellen, kan man repræsentere feltet i viewet ved blot at ændre i den tilhørende XHTML-fil. Er der, som oftest, nogle bestemte krav til værdiers format, tilføjer input kravene ét sted, navnligt i XHTML-filen/erne. Denne feature skulle eftersigende også gøre implementation af AJAX meget let. 
 
-Controlleren er i vores implementering  klassen\texttt{Controller}. Det kan diskuteres, om Web.xml ikke også er en del af controlleren, da den er med til at fortælle hvilken del af viewet man skal se. \texttt{Controller} har dog alene ansvaret for at opdatere modellen.
+En ulempe ved JSFs abstraktion er at den kan virke som en begrænsning for udvikleren. Eksempelvis har udvikleren begrænset kontrol over hvordan \texttt{jsf/html} forms skal oversættes til html og hvordan AJAX skal håndteres. Derudover er det ikke åbenlyst hvilken tilstand siden har ud fra URL og requests, da meget af sidens tilstand er gemt væk i serverens interne repræsentation af session'en. Dette kan være en hindring ønsker man eksempelvis at lave websider der indeholder information som let skal kunne tilgåes og deles. Her vil man ikke bare kunne dele en URL og så regne med at modtageren åbner den samme side som man selv er på. Stuts, værende et Action framework, passer langt bedre til denne slags sider, med mange brugere. Ønsker man istedet at lave en side med færre brugere og stor fleksibilitet ift. redigering af sidens indhold, så vil et component framework, som JSF er, være at anbefale.
 
-Vores view er implementeret som JSP-filer. Her er det værd at nævne QuickPollResults.jsp, som håndterer tilfældet, hvor der ikke er stemmer såvel som det, hvor der er. Dette lægger umiddelbart op til, at jsp-filen indeholder java, men vi har omgået dette ved at bruge JSTLs ``when-otherwise''-konstruktion. Dette er lidt at omgå kravene, når man bliver bedt om java løse filer, endvidere er det også at gå væk fra at være deklarativ i JSP filerne, da vi begynder at styre noget control flow. Alternativt kunne vi have brugt den conditional der er i expression language\footnote{S. 28 i specifikationen}, hvilket vi dog ikke forsøgte, og dermed ikke ved om det ville give problemer. En sidste løsning kunne være at lave endnu en JSP fil, som bliver brugt når der ingen stemmer er, og lade controlleren sørge for at håndtere hvilken situation vi er i.
+\section*{Opgave 2}
 
-
-%view: jstl vs conditional i el  vs java
-
+Vi har sørget for at brugeren ikke kan tilgå ``results'' og ``ask'' siderne på følgende måde
+\begin{description}
+\item[JSF] Vi valgte at implementere dette i de respektive XHTML filer. Dette strider en smule imod tankegangen bag JSF, da det virker mere imparativt end deklarativt, og ideelt set skulle være en del af den bortabstraherede controller. Dette kunne også være implementeret vha. \texttt{PhasesListener}'s, for på den måde at følge tankegangen. 
+\item[Struts] Det falde os naturligt at implementere dette som en del af Struts actions. Disse returnerer således \texttt{"FATAL"} hvis spørgsmålet ikke er initialiseret. 
+\end{description}
 \end{document}
 
