@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="test">
+    <xs:complexType>
+      <xs:choice>
+        <xs:element name="same" type="xs:string" />
+        <xs:sequence>
+	  <xs:element name="same" type="xs:string" />
+	  <xs:element name="needLookAhead" type="xs:string" />
+        </xs:sequence>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
