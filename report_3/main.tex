@@ -44,8 +44,8 @@ RELAX NG understøtter ikke direkte ``restriction'', ``extension'' og ``substitu
 \begin{description}
 \item[Restriction] opnås ved at lave en ny type, der indeholder de egenskaber en \textit{restriction} ville have. 
 \item[Extension] kan gøres ved, i sin definition (\texttt{<define />}) af den afledede type, at inkludere et \texttt{<ref />} element, pegende på defitionen af ``base'' elementet. 
-\item[Substitution]  
-\end{description} 
+\item[Substitution] opnås ved \texttt{define}'s ``choice'' attribut. Denne kan kombinere flere definitioner, for på den måde at opnå samme resultat.  
+\end{description}
 
 \section*{Opgave 5}
 Schematron er en ISO standard til validering af XML dokumenter, som  i modsætningen til grammatikbaserede DTD, XML Schema og RELAX NG, er regelbaseret. Schematron opsætter regler og beskriver dermed hvordan dokumenter ikke må se ud, hvilket står i kontrast til de grammatikbasererde sprog, der beskriver hvordan et dokument skal se ud. Schematron skrives i XML og er beskrevet af RELAX NG og Schematron Schema'er. Schematron tager et XML doukument som input, og tester regler mod dets nodes. Reglerne bruger XPath til at sammenligne nodes egenskaber, som attribut indhold og struktur. Derved kan egenskaber sammenligens uafhængigt af deres placering i dokumentet. Begrænsninger på noders placeringer er således ikke udelukkende bestemt af deres forældres typer, men kan være bestemt ud fra egne børn egenskaber, søskendes børn egenskaber, forældres søskendes børnebørn egenskaber osv. \\
