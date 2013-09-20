@@ -1,23 +1,24 @@
 <?xml version="1.0"?>
 <grammar xmlns="http://relaxng.org/ns/structure/1.0">
     <start>
-	<element name="point">
-		    <choice>
-			<interleave>
-			    <zeroOrMore>
-			        <ref name="note" />
-			    </zeroOrMore>
-			    <ref name="address" />
-			</interleave>
-			<interleave>
-			    <zeroOrMore>
-			        <ref name="note" />
-			    </zeroOrMore>
-			        <ref name="latitude" />
-				<ref name="longitude" />
-			</interleave>
-		    </choice>
-	</element>
+      <element name="point">
+	<zeroOrMore>
+	  <ref name="note" />
+	</zeroOrMore>
+	<choice>
+	  <ref name="address" />
+	  <group>
+	    <ref name="latitude" />
+	    <zeroOrMore>
+	      <ref name="note" />
+	    </zeroOrMore>
+	    <ref name="longitude" />
+	  </group>	  
+	</choice>
+	<zeroOrMore>
+	  <ref name="note" />
+	</zeroOrMore>
+      </element>
     </start>
     <define name="note">
         <element name="note"><text /></element>
