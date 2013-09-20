@@ -46,23 +46,23 @@ Ift. code-maintainability, så er gør abstraktionsniveauet i JSF det meget let 
 En ulempe ved JSFs abstraktion er at den kan virke som en begrænsning for udvikleren. Eksempelvis har udvikleren begrænset kontrol over hvordan \texttt{jsf/html} forms skal oversættes til html og hvordan AJAX skal håndteres. Derudover er det ikke åbenlyst hvilken tilstand siden har ud fra URL og requests, da meget af sidens tilstand er gemt væk i serverens interne repræsentation af session'en. Dette kan være en hindring ønsker man eksempelvis at lave websider der indeholder information som let skal kunne tilgåes og deles. Her vil man ikke bare kunne dele en URL og så regne med at modtageren åbner den samme side som man selv er på. Stuts, værende et Action framework, passer langt bedre til denne slags sider, med mange brugere. Ønsker man istedet at lave en side med færre brugere og stor fleksibilitet ift. redigering af sidens indhold, så vil et component framework, som JSF er, være at anbefale.
 
 
-Spring sammenlignet med Servlets
+\subsection*{Spring sammenlignet med Servlets}
 Spring minder på mange måder om Servlets. Begge bruger web.xml eller annotation til at mappe forespørgsler til den rigtige Controller eller Servlet (alt efter om det er Spring eller Servlets), som der så håndterer forespørgselen ved at ændre modellen og derefter enten direkte sende et view tilbage til brugeren, eller bede en JSP side eller lignende om at gøre det. En lille forskel er umiddelbart, hvordan det rigtige view bliver valgt. I servlets ville man lave et redirect til den ønskede JSP-side, hvor man i Spring returnerer et \texttt{ModelAndView} objekt, som bliver givet videre til en view resolver, der finder det rigtige view og giver den, modellen.
 
 For at konkludere så er der ikke nogen stor forskel på Servlets og Spring.
 
-Spring sammenlignet med JSP
+\subsection*{Spring sammenlignet med JSP}
 Hvis man laver en ren JSP side, hvor der ikke er nogen Servlets, fordi java koden er i de enkelte JSP-sider, så er der nogle flere forskelle end der var med Servlets. Nu har vi nemlig view og controller blandet sammen, da JSP-siderne står for at ændre i modellen samt præsentere hver side og dermed en relevant del af modellen. Til sammenligning er ansvaret delt en del mere op i Spring frameworket, hvis det er kombineret med noget til at håndtere viewet (eksempelvis JSP). Er det ikke kombineret med det, så er view og controller igen blandet sammen, da controlleren så håndterer alt arbejdet.
 
-Et fælles træk ved JSP, Servlets og Spring, hvor der er brugt annotation til at mappe requests, er at det ved større sider kan blive uoverskueligt, hvordan flowet helt præcist er. Endvidere, hvis man vil ændre i det, så skal man besøge alle de filer, der skal mappes på en ny måde, og man risikerer hurtigt at miste overblikket.
+Et fælles træk ved JSP, Servlets og Spring, hvor der er brugt annotation til at mappe requests, er at det ved større sider kan blive uoverskueligt, hvordan flowet helt præcist er. Endvidere, hvis man vil ændre i det, så skal man besøge alle de filer, der skal mappes på en ny måde, og man risikerer hurtigt at miste overblikket.
 
 
-Spring sammenlignet med JSF.
+\subsection*{Spring sammenlignet med JSF}
 I JSF er mappingen af sider beskrevet i faces-config.xml, hvilket er lidt anderledes end for Spring. Det der gør det anerledes er, at man her ikke bare mapper en URL til en controller, men man opbygger en FSA, som fotæller hvordan flowet på siden er. Man får derfor et bedre overblik over flowet på siden, og kan nemt rette i det, hvis det bliver nødvendigt. Dog skal man forbi controlleren, da den returnerer en streng, der fortæller hvilket view, man skal gå til. I JSF har man i viewet god mulighed for at bruge expression language, hvilket betyder, at man har god mulighed for at lave nogle beregninger i viewet. Dette er umiddelbart også muligt i Spring, hvis man bruger det sammen med JSP.
 
 Da controlleren fortæller en dispatcher, hvilket view det er man vil se, så minder de to frameworks om hinanden på det punkt.
 
-Spring sammenlignet med Struts.
+\subsection*{Spring sammenlignet med Struts}
 Ligesom JSF har struts en lille FSA i kraft af struts.xml, som afgør flowet på siden. Ligesom ved JSF, så afgører Controlleren hvilket view der skal vises ved at sende en respons streng tilbage, som struts.xml bruger til at vælge viewet. I Struts skal controlleren stå for at klargøre den data, der skal vises i viewet, da man her ikke har adgang til et expression langugage i stil med det i JSF og JSP, og dermed er der her en afvigelse i forhold til Spring, hvis man bruger det sammen med JSP.
 
 

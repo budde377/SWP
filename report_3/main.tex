@@ -10,6 +10,8 @@
 \usepackage[danish]{babel}
 \usepackage[T1]{fontenc}
  
+\usepackage{cite}
+\usepackage{natbib}
 % Matematisk udtryk, fede symboler, theoremer og fancy ting (fx kædebrøker)
 \usepackage{amsmath,amssymb}
 \usepackage{bm}
@@ -70,9 +72,69 @@ Som nævnt i slides fra forelæsningen om Schema sprog, så er en væsentlig gru
 \subsection*{Give an example of a RELAX NG schema that doesn't have the property.}
 Et eksempel på et RELAX NG xhema, som ikke opfylder ``unique interpretation'' (vi går ud fra, det det er dette ``the property'' refererer til) findes i filen \texttt{ambiguous.rng}. Når vi kigger på et \emph{b} element, er det her ikke muligt at se, om det skal indeholde et \emph{c} element, eller om det blot skal indeholde tekst. For at afgøre dette bliver vi nødt til at kigge på \emph{b}s barn.
 
+\section*{Opgave 4}
+RELAX NG understøtter ikke direkte ``restriction'', ``extension'' og ``substitution-group'', men opnår dette på følgende måder:
+\begin{description}
+\item[Restriction] opnås ved at lave en ny type, der indeholder de egenskaber en \textit{restriction} ville have. 
+\item[Extension] kan gøres ved, i sin definition (\texttt{<define />}) af den afledede type, at inkludere et \texttt{<ref />} element, pegende på defitionen af ``base'' elementet. 
+\item[Substitution]  
+\end{description} 
+
+\section*{Opgave 5}
+Schematron er en ISO standard til validering af XML dokumenter, som  i modsætningen til grammatikbaserede DTD, XML Schema og RELAX NG, er regelbaseret. Schematron opsætter regler og beskriver dermed hvordan dokumenter ikke må se ud, hvilket står i kontrast til de grammatikbasererde sprog, der beskriver hvordan et dokument skal se ud. Schematron skrives i XML og er beskrevet af RELAX NG og Schematron Schema'er. Schematron tager et XML doukument som input, og tester regler mod dets nodes. Reglerne bruger XPath til at sammenligne nodes egenskaber, som attribut indhold og struktur. Derved kan egenskaber sammenligens uafhængigt af deres placering i dokumentet. Begrænsninger på noders placeringer er således ikke udelukkende bestemt af deres forældres typer, men kan være bestemt ud fra egne børn egenskaber, søskendes børn egenskaber, forældres søskendes børnebørn egenskaber osv. \\
+Schematorn består af følgende:
+\begin{description}
+  \item[Faser] Værende navngivne grupperinger af patterns. Faser er valgfri og undlades de, bliver input testet mod alle mønstre. Faser definers med \texttt{<phase id=phase-id />} elementet og vælger mønstre ud fra deres id. 
+  \item[Mønstre] Grupperinger af regeler. For hver mønster bliver én regel evalueret. Navnligt den første som passer på den node, som testes. Mønstre angives med \texttt{<pattern name=pattern-name [id=pattern-id] />} elementet. 
+  \item[Regler] En regel er en samling af assertions, og bestemmer vha. en contekst attribut  hvorvidt den node, der testes, skal udsættes for assertions. Regler beskrives med \texttt{<rule context=xpath />} elementet.
+  \item[Assertions] Disse er som man kender dem fra unittesting. De indeholder en betingelse, udtrykt som en boolean-xpath, og kan enten være positive eller negative udgjort af hhv. \texttt{<assert test=bool-xpath>message</assert>} og \texttt{<report test=bool-xpath>message</report>} elementer.  
+  \item[Diagnostik] Er et valgfrit element, som kan give en mere beskrivende forklaring af eventuelle fejl i koden, for en eller flere assertions. Diagnostikken defineres i \texttt{<diagnostics />} elementet. 
+\end{description}  
+Schematron bruges sjældent som eneste valideringsværktøj, men sammen med schemas. Ligesom schemas bør bruges sammen med Schematron, da de hver især kan udtrykke noget forskellige egenskaber ved XML. 
+\subsection*{Schematron og The Atom Syndication Format}
+The Atom Syndication Format er et XML basert format til beskrivelse af feeds, der i modsætnig til RSS er en IETF standard.  Atom er beskrevet med RELAX NG og Schematron. Her beskriver Schematron at et feed skal have en author attribut, hvis ikke alle entries har en author: 
+\begin{lstlisting}
+  s:rule [
+    context = "atom:feed"
+    s:assert [
+      test = "atom:author or not(atom:entry[not(atom:author)])"
+      "An atom:feed must have an atom:author unless all "
+      ~ "of its atom:entry children have an atom:author."
+    ]
+
+    ...
+    
+    s:rule [
+      context = "atom:entry"
+      s:assert [
+        test = "atom:author or "
+        ~ "../atom:author or atom:source/atom:author"
+        "An atom:entry must have an atom:author "
+        ~ "if its feed does not."
+      ]
+    ]
+\end{lstlisting}
+og at enhver entry skal have indhold, eller referere til indhold
+\begin{lstlisting}
+  s:rule [
+    context = "atom:entry"
+    s:assert [
+      test = "atom:link[@rel='alternate'] "
+      ~ "or atom:link[not(@rel)] "
+      ~ "or atom:content"
+      "An atom:entry must have at least one atom:link element "
+      ~ "with a rel attribute of 'alternate' "
+      ~ "or an atom:content."
+    ]
+  ]
+\end{lstlisting}
 
 \section*{Bonus opgave 6}
-Validering med RELAX NG kan gøres i lineær tid ved at lave en NFA ud fra schemaet og fra denne lave en DFA. Vi kan konstruere en NFA på følgende måde:
+Vi kan validere et XML dokument med respekt til en ``Regular tree grammar'' i lineær tid af input vha. en ``non-deterministic bottom-up'' algoritme  ~\cite[s. 12]{Murata00taxonomyof}. Her udnytter Murata et al.  bl.a. at man kan finde match til regulære udtryk i lineær tid af udtrykket. Men RELAX NG ikke er en ``Regular tree grammar'', da den eksempelvis understøtter en vilkårlig ordning af sine børn gennem \texttt{<interleave>}. Vi kan udtrykke interleave med et regulært udtryk som valget mellem alle sekvens kombinationer. Denne omskrivning vil medføre at udtrykkets længde vil stige eksponentielt, og derved vil den tid det tager at bestemme om en sekvens af børn er gyldig, også stige eksponentielt. Denne udfordring løses i RELAX NG vh.a. en afledning af regulære udtryk skabt af James Clark. Afledning kan afgøres i lineær tid med restriktioner på \texttt{<text />} og refererede elementers navne \footnote{http://relaxng.org/spec-20011203.html\#interleave-restrictions}. Deraf følger at XML dokumenter kan valideres ift. et RELAX NG schema i lineær tid af deres længde. 
+
+
+\bibliography{main}{}
+\bibliographystyle{plain} 
 
  
 \end{document}
