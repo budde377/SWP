@@ -1,0 +1,4 @@
+<!ELEMENT test ((same, check) | (same, needLookAhead))>
+<!ELEMENT same (#PCDATA)>
+<!ELEMENT needLookAhead (#PCDATA)>
+<!ELEMENT check (#PCDATA)>

@@ -1,0 +1,14 @@
+<point xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://swp.swp/geo geo.xsd"
+       xmlns="http://swp.swp/geo">
+<!--<address>hej1</address> -->
+  <note>hej5</note>
+  <note>hej5</note>
+<latitude>hej2</latitude>  
+  <note>hej5</note>
+  <longitude>hej3</longitude>
+
+  <note>hej5</note>
+
+  <note>hej5</note>
+</point>
