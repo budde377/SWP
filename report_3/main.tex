@@ -34,10 +34,43 @@
 % Manual: http://www.ctan.org/tex-archive/macros/latex/contrib/mhchem/mhchem.pdf
 %\usepackage[version=3]{mhchem}
 \author{Lau Skorstengaard, 20103173 \\Christian Budde Christensen, 20103616}
-\title{Serverbaseret Webprogrammering\\1. Aflevering}
+\title{Serverbaseret Webprogrammering\\3. Aflevering}
 
-\begin{document} 
+\begin{document}
 \maketitle
+\section*{Opgave 1}
+De tre specifiktaioner af XML sproget for geografisk information kan findes i filerne \texttt{geo.dtd, geo.xsd og geo.mg}, som er specifikationen i hhv. DTD, XML Schema og RELAX NG. De tre specifikationer er blevet testet mod små eksempler, hvor de virker. Udover de værktøjer, der er på WebTek hjemmesiden, så er jing blevet brugt til at teste om XML dokumenter overholder en specifikation i RELAX NG.
+
+\section*{Opgave 2}
+I specifikationen for XML 1.0\footnote{http://www.w3.org/TR/REC-xml/#sec-element-content} finder man reglen for ``Deterministic Content Models'' (her vil vi omtale den som DCM), som formelt er beskrevet som:
+\begin{quotation}
+The content of an element matches a content model if and only if it is possible to trace out a path through the content model, obeying the sequence, choice, and repetition operators and matching each element in the content against an element type in the content model. For compatibility, it is an error if the content model allows an element to match more than one occurrence of an element type in the content model. For more information, see E Deterministic Content Models.
+\end{quotation}
+I referencen er der en mere formel beskrivelse af kravet, som dog ikke umiddelbart giver en bedre ide om hvad det dækker over. Men reglen, kan næsten ikke udtrykkes klarere end den er her, da den går ud på, at man ved validering entydigt skal kunne bestemme hvilken type element et element i et dokument svarer til. Ved den mere formelle definition bringes automater på banen, men essensen er stadig den samme, man skal kunne bestemme et elements type uden at kigge på hvilke børn eller attributter det her.  XML Schema specifikationen\footnote{http://www.w3.org/TR/xmlschema-1/#cos-nonambig} findes Unique Particle Attribute (UPA) beskrevet som:
+\begin{quotation}
+A content model must be formed such that during ·validation· of an element information item sequence, the particle component contained directly, indirectly or ·implicitly· therein with which to attempt to ·validate· each item in the sequence in turn can be uniquely determined without examining the content or attributes of that item, and without any information about the items in the remainder of the sequence.
+\end{quotation}
+Med andre ord siger UPA, at man under validering ved at kigge på et element skal kunne afgør, om det stemmer overens med modellen uden at lave et lookahead på det elementet indeholder, eller hvilke attributer det har. Dette betyder endvidere, at man ikke behøver at kigge videre i modellen, hvis man har fundet et match.
+
+UPA og DCM siger basalt set det samme, nemlig, at man deterministisk skal kunne bestemme, typen af et element direkte ud fra modellen. En umiddelbar grund til disse to regler kan være, at det med dem er let at lave en validering, der kører i lineær tid.
+
+EDC er i specificationerne beskrevet som\footnote{http://www.w3.org/TR/2009/WD-xmlschema11-1-20090130/#cos-element-consistent}:
+\begin{quotation}
+If the {particles} property contains, either directly, indirectly (that is, within the {particles} property of a contained model group, recursively), or ·implicitly·, two or more element declarations with the same expanded name, then all their type definitions must be the same top-level definition
+\end{quotation}
+Med andre ord siger EDC reglen, at to elementer med samme navn skal have samme type, hvis de forekommer i samme ``particle'', hvilket eksempelvis kunne være et sequence element. At det både gælder for ``directly og indirectly'' betyder, at dette gælder uanset om man laver en implicit deklaration af elementet, eller man refererer til en top level definition.
+
+Hvis man laver en specifikation med XML Schema for et sprog og bruger den validator, der er givet i WebTek, så går den ud fra, at specifikationen overholder UPA. Det betyder, at den ved tvetydighed tager den første regel, som kan passe på det element, den arbejder med, og tjekker for den. Hvis dette ikke er den rigtige regel, så melder validatoren selvfølgelig en fejl. Vi fandt ud af, at dette var tilfældet ved at lave det XML Schema, som findes i \texttt{invalid.xsd} og testede det på XML dokumentet \texttt{testInvalidXsd.xml}.
+
+På samme måde som for XML Schema lavede vi en ugyldig specifikation i DTD, som kan findes i \texttt{invalid.dtd} med et tilhørende XML dokument \texttt{testInvalidDtd.xml}, dog fejler validatoren præsenteret i WebTek ikke her. Om vi har misforstået DCM, eller om dette er en konsekvens af, at der er mange ugyldige dtd schemaer der ude ved vi ikke.
+
+\section*{Opgave 3}
+Vi er ikke helt sikre på, hvad spørgsmålet dækker over, så for ikke at gøre det alt for forvirrende har vi svaret på en del af det af gangen.
+\subsection*{Why does XML Schema have the "unique interpretations" property and RELAX NG does not? That is, what are the features in XML Schema that imply this property?} 
+Som nævnt i slides fra forelæsningen om Schema sprog, så er en væsentlig grund til, at der i XML Schema kræves entydig fortolkning, featuren ``post-schema-validation infoset''. Hvis man kigger i den officielle tutorial for RELAX NG, så er der en sammenligning med DTD\footnote{http://relaxng.org/tutorial-20011203.html#IDAGSZR}, som fortæller hvilke ting fra DTD, der ikke er i RELAX NG. Som eksempel på en feature i DTD, der også er i XML Schema, men ikke er i RELAX NG er default værdier til attributter. Lad os reflekterer lidt over, hvorfor  man ikke kan have unique interpretation sammen med default værdier. Hvis man ønsker at opbygge infosettet samtidig med, at man validerer, så skal man kunne afgøre entydigt hvilken type et element har, da man ellers ikke ved hvilken default værdi man skal tildele attributten.
+
+\subsection*{Give an example of a RELAX NG schema that doesn't have the property.}
+Et eksempel på et RELAX NG xhema, som ikke opfylder ``unique interpretation'' (vi går ud fra, det det er dette ``the property'' refererer til) findes i filen \texttt{ambiguous.rng}. Når vi kigger på et \emph{b} element, er det her ikke muligt at se, om det skal indeholde et \emph{c} element, eller om det blot skal indeholde tekst. For at afgøre dette bliver vi nødt til at kigge på \emph{b}s barn.
 
 \section*{Opgave 4}
 RELAX NG understøtter ikke direkte ``restriction'', ``extension'' og ``substitution-group'', men opnår dette på følgende måder:
@@ -102,4 +135,7 @@ Vi kan validere et XML dokument med respekt til en ``Regular tree grammar'' i li
 
 \bibliography{main}{}
 \bibliographystyle{plain} 
+
+ 
 \end{document}
+
