@@ -39,7 +39,7 @@
 \begin{document}
 \maketitle
 \section*{Opgave 1}
-De tre specifiktaioner af XML sproget for geografisk information kan findes i filerne \texttt{geo.dtd, geo.xsd og geo.rng}, som er specifikationen i hhv. DTD, XML Schema og RELAX NG. De tre specifikationer er blevet testet mod små eksempler, hvor de virker. Udover de værktøjer, der er på WebTek hjemmesiden, så er jing blevet brugt til at teste om XML dokumenter overholder en specifikation i RELAX NG.
+De tre specifiktaioner af XML sproget for geografisk information kan findes i filerne \texttt{geo.dtd, geo.xsd og geo.mg}, som er specifikationen i hhv. DTD, XML Schema og RELAX NG. De tre specifikationer er blevet testet mod små eksempler, hvor de virker. Udover de værktøjer, der er på WebTek hjemmesiden, så er jing blevet brugt til at teste om XML dokumenter overholder en specifikation i RELAX NG.
 
 \section*{Opgave 2}
 I specifikationen for XML 1.0\footnote{http://www.w3.org/TR/REC-xml/\#sec-element-content} finder man reglen for ``Deterministic Content Models'' (her vil vi omtale den som DCM), som formelt er beskrevet som:
@@ -69,16 +69,39 @@ Vi er ikke helt sikre på, hvad spørgsmålet dækker over, så for ikke at gør
 \subsubsection*{Why does XML Schema have the "unique interpretations" property and RELAX NG does not? That is, what are the features in XML Schema that imply this property?} 
 Som nævnt i slides fra forelæsningen om Schema sprog, så er en væsentlig grund til, at der i XML Schema kræves entydig fortolkning, featuren ``post-schema-validation infoset''. Hvis man kigger i den officielle tutorial for RELAX NG, så er der en sammenligning med DTD\footnote{http://relaxng.org/tutorial-20011203.html\#IDAGSZR}, som fortæller hvilke ting fra DTD, der ikke er i RELAX NG. Som eksempel på en feature i DTD, der også er i XML Schema, men ikke er i RELAX NG er default værdier til attributter. Lad os reflekterer lidt over, hvorfor  man ikke kan have unique interpretation sammen med default værdier. Hvis man ønsker at opbygge infosettet samtidig med, at man validerer, så skal man kunne afgøre entydigt hvilken type et element har, da man ellers ikke ved hvilken default værdi man skal tildele attributten.
 
-\subsubsection*{Give an example of a RELAX NG schema that doesn't have the property.}
+\subsection*{Give an example of a RELAX NG schema that doesn't have the property.}
 Et eksempel på et RELAX NG xhema, som ikke opfylder ``unique interpretation'' (vi går ud fra, det det er dette ``the property'' refererer til) findes i filen \texttt{ambiguous.rng}. Når vi kigger på et \emph{b} element, er det her ikke muligt at se, om det skal indeholde et \emph{c} element, eller om det blot skal indeholde tekst. For at afgøre dette bliver vi nødt til at kigge på \emph{b}s barn.
 
 \section*{Opgave 4}
 RELAX NG understøtter ikke direkte ``restriction'', ``extension'' og ``substitution-group'', men opnår dette på følgende måder:
 \begin{description}
-\item[Restriction] opnås ved at lave en ny type, der indeholder de egenskaber en \textit{restriction} ville have. 
-\item[Extension] kan gøres ved, i sin definition (\texttt{<define />}) af den afledede type, at inkludere et \texttt{<ref />} element, pegende på defitionen af ``base'' elementet. 
-\item[Substitution]  
-\end{description} 
+\item[Restriction] opnås ved at lave en ny type, der indeholder de egenskaber en \textit{restriction} ville have og undlader dem som man ikke ville have.  
+\item[Extension] kan gøres ved, i sin definition (\texttt{<define />}) af den afledede type, at inkludere et \texttt{<ref />} element, pegende på defitionen af ``base'' elementet. \\
+{\bf Eksempel:}
+\begin{lstlisting}
+  <define name=''BaseType'' >
+    ...
+  </define>
+
+  <define name=''ExtensionType''>
+    <ref name=''BaseType'' />
+    ...
+  </define>
+\end{lstlisting}
+\item[Substitution] opnås ved \texttt{define}'s \texttt{choice} attribut. Denne kan kombinere flere definitioner, for på den måde at opnå samme resultat.  \\
+{\bf Eksempel:}
+\begin{lstlisting}
+  <define name=''Head'' >
+    ...
+  </define>
+
+  <define name=''Head'' choice=''combine''>
+    ...
+  </define>
+\end{lstlisting}
+
+
+\end{description}
 
 \section*{Opgave 5}
 Schematron er en ISO standard til validering af XML dokumenter, er regelbaseret i modsætningen til DTD, XML Schema og RELAX NG, som er grammatikbaserede. Schematron opsætter regler og beskriver dermed, hvordan dokumenter ikke må se ud, hvilket står i kontrast til de grammatikbasererde sprog, der beskriver, hvordan et dokument skal se ud. Schematron skrives i XML og er beskrevet af RELAX NG og Schematron Schema'er. Schematron tager et XML doukument som input og tester regler mod dets nodes. Reglerne bruger XPath til at sammenligne nodes egenskaber, som eksempelvis attributindhold og struktur. Derved kan egenskaber sammenligens uafhængigt af deres placering i dokumentet. Begrænsninger på en nodes placeringer er således ikke udelukkende bestemt af deres forælders type, men kan være bestemt ud fra egne børns egenskaber, søskendes børn egenskaber, forældres søskendes børnebørn egenskaber osv. \\
