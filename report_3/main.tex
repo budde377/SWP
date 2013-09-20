@@ -39,14 +39,14 @@
 \begin{document}
 \maketitle
 \section*{Opgave 1}
-De tre specifiktaioner af XML sproget for geografisk information kan findes i filerne \texttt{geo.dtd, geo.xsd og geo.mg}, som er specifikationen i hhv. DTD, XML Schema og RELAX NG. De tre specifikationer er blevet testet mod små eksempler, hvor de virker. Udover de værktøjer, der er på WebTek hjemmesiden, så er jing blevet brugt til at teste om XML dokumenter overholder en specifikation i RELAX NG.
+De tre specifiktaioner af XML sproget for geografisk information kan findes i filerne \texttt{geo.dtd, geo.xsd og geo.rng}, som er specifikationen i hhv. DTD, XML Schema og RELAX NG. De tre specifikationer er blevet testet mod små eksempler, hvor de virker. Udover de værktøjer, der er på WebTek hjemmesiden, så er jing blevet brugt til at teste om XML dokumenter overholder en specifikation i RELAX NG.
 
 \section*{Opgave 2}
-I specifikationen for XML 1.0\footnote{http://www.w3.org/TR/REC-xml/#sec-element-content} finder man reglen for ``Deterministic Content Models'' (her vil vi omtale den som DCM), som formelt er beskrevet som:
+I specifikationen for XML 1.0\footnote{http://www.w3.org/TR/REC-xml/\#sec-element-content} finder man reglen for ``Deterministic Content Models'' (her vil vi omtale den som DCM), som formelt er beskrevet som:
 \begin{quotation}
 The content of an element matches a content model if and only if it is possible to trace out a path through the content model, obeying the sequence, choice, and repetition operators and matching each element in the content against an element type in the content model. For compatibility, it is an error if the content model allows an element to match more than one occurrence of an element type in the content model. For more information, see E Deterministic Content Models.
 \end{quotation}
-I referencen er der en mere formel beskrivelse af kravet, som dog ikke umiddelbart giver en bedre ide om hvad det dækker over. Men reglen, kan næsten ikke udtrykkes klarere end den er her, da den går ud på, at man ved validering entydigt skal kunne bestemme hvilken type element et element i et dokument svarer til. Ved den mere formelle definition bringes automater på banen, men essensen er stadig den samme, man skal kunne bestemme et elements type uden at kigge på hvilke børn eller attributter det her.  XML Schema specifikationen\footnote{http://www.w3.org/TR/xmlschema-1/#cos-nonambig} findes Unique Particle Attribute (UPA) beskrevet som:
+I referencen er der en mere formel beskrivelse af kravet, som dog ikke umiddelbart giver en bedre ide om hvad det dækker over. Men reglen, kan næsten ikke udtrykkes klarere end den er her, da den går ud på, at man ved validering entydigt skal kunne bestemme hvilken type element et element i et dokument svarer til. Ved den mere formelle definition bringes automater på banen, men essensen er stadig den samme, man skal kunne bestemme et elements type uden at kigge på hvilke børn eller attributter det her.  XML Schema specifikationen\footnote{http://www.w3.org/TR/xmlschema-1/\#cos-nonambig} findes Unique Particle Attribute (UPA) beskrevet som:
 \begin{quotation}
 A content model must be formed such that during ·validation· of an element information item sequence, the particle component contained directly, indirectly or ·implicitly· therein with which to attempt to ·validate· each item in the sequence in turn can be uniquely determined without examining the content or attributes of that item, and without any information about the items in the remainder of the sequence.
 \end{quotation}
@@ -54,7 +54,7 @@ Med andre ord siger UPA, at man under validering ved at kigge på et element ska
 
 UPA og DCM siger basalt set det samme, nemlig, at man deterministisk skal kunne bestemme, typen af et element direkte ud fra modellen. En umiddelbar grund til disse to regler kan være, at det med dem er let at lave en validering, der kører i lineær tid.
 
-EDC er i specificationerne beskrevet som\footnote{http://www.w3.org/TR/2009/WD-xmlschema11-1-20090130/#cos-element-consistent}:
+EDC er i specificationerne beskrevet som\footnote{http://www.w3.org/TR/2009/WD-xmlschema11-1-20090130/\#cos-element-consistent}:
 \begin{quotation}
 If the {particles} property contains, either directly, indirectly (that is, within the {particles} property of a contained model group, recursively), or ·implicitly·, two or more element declarations with the same expanded name, then all their type definitions must be the same top-level definition
 \end{quotation}
@@ -66,10 +66,10 @@ På samme måde som for XML Schema lavede vi en ugyldig specifikation i DTD, som
 
 \section*{Opgave 3}
 Vi er ikke helt sikre på, hvad spørgsmålet dækker over, så for ikke at gøre det alt for forvirrende har vi svaret på en del af det af gangen.
-\subsection*{Why does XML Schema have the "unique interpretations" property and RELAX NG does not? That is, what are the features in XML Schema that imply this property?} 
-Som nævnt i slides fra forelæsningen om Schema sprog, så er en væsentlig grund til, at der i XML Schema kræves entydig fortolkning, featuren ``post-schema-validation infoset''. Hvis man kigger i den officielle tutorial for RELAX NG, så er der en sammenligning med DTD\footnote{http://relaxng.org/tutorial-20011203.html#IDAGSZR}, som fortæller hvilke ting fra DTD, der ikke er i RELAX NG. Som eksempel på en feature i DTD, der også er i XML Schema, men ikke er i RELAX NG er default værdier til attributter. Lad os reflekterer lidt over, hvorfor  man ikke kan have unique interpretation sammen med default værdier. Hvis man ønsker at opbygge infosettet samtidig med, at man validerer, så skal man kunne afgøre entydigt hvilken type et element har, da man ellers ikke ved hvilken default værdi man skal tildele attributten.
+\subsubsection*{Why does XML Schema have the "unique interpretations" property and RELAX NG does not? That is, what are the features in XML Schema that imply this property?} 
+Som nævnt i slides fra forelæsningen om Schema sprog, så er en væsentlig grund til, at der i XML Schema kræves entydig fortolkning, featuren ``post-schema-validation infoset''. Hvis man kigger i den officielle tutorial for RELAX NG, så er der en sammenligning med DTD\footnote{http://relaxng.org/tutorial-20011203.html\#IDAGSZR}, som fortæller hvilke ting fra DTD, der ikke er i RELAX NG. Som eksempel på en feature i DTD, der også er i XML Schema, men ikke er i RELAX NG er default værdier til attributter. Lad os reflekterer lidt over, hvorfor  man ikke kan have unique interpretation sammen med default værdier. Hvis man ønsker at opbygge infosettet samtidig med, at man validerer, så skal man kunne afgøre entydigt hvilken type et element har, da man ellers ikke ved hvilken default værdi man skal tildele attributten.
 
-\subsection*{Give an example of a RELAX NG schema that doesn't have the property.}
+\subsubsection*{Give an example of a RELAX NG schema that doesn't have the property.}
 Et eksempel på et RELAX NG xhema, som ikke opfylder ``unique interpretation'' (vi går ud fra, det det er dette ``the property'' refererer til) findes i filen \texttt{ambiguous.rng}. Når vi kigger på et \emph{b} element, er det her ikke muligt at se, om det skal indeholde et \emph{c} element, eller om det blot skal indeholde tekst. For at afgøre dette bliver vi nødt til at kigge på \emph{b}s barn.
 
 \section*{Opgave 4}
@@ -81,14 +81,14 @@ RELAX NG understøtter ikke direkte ``restriction'', ``extension'' og ``substitu
 \end{description} 
 
 \section*{Opgave 5}
-Schematron er en ISO standard til validering af XML dokumenter, som  i modsætningen til grammatikbaserede DTD, XML Schema og RELAX NG, er regelbaseret. Schematron opsætter regler og beskriver dermed hvordan dokumenter ikke må se ud, hvilket står i kontrast til de grammatikbasererde sprog, der beskriver hvordan et dokument skal se ud. Schematron skrives i XML og er beskrevet af RELAX NG og Schematron Schema'er. Schematron tager et XML doukument som input, og tester regler mod dets nodes. Reglerne bruger XPath til at sammenligne nodes egenskaber, som attribut indhold og struktur. Derved kan egenskaber sammenligens uafhængigt af deres placering i dokumentet. Begrænsninger på noders placeringer er således ikke udelukkende bestemt af deres forældres typer, men kan være bestemt ud fra egne børn egenskaber, søskendes børn egenskaber, forældres søskendes børnebørn egenskaber osv. \\
+Schematron er en ISO standard til validering af XML dokumenter, er regelbaseret i modsætningen til DTD, XML Schema og RELAX NG, som er grammatikbaserede. Schematron opsætter regler og beskriver dermed, hvordan dokumenter ikke må se ud, hvilket står i kontrast til de grammatikbasererde sprog, der beskriver, hvordan et dokument skal se ud. Schematron skrives i XML og er beskrevet af RELAX NG og Schematron Schema'er. Schematron tager et XML doukument som input og tester regler mod dets nodes. Reglerne bruger XPath til at sammenligne nodes egenskaber, som eksempelvis attributindhold og struktur. Derved kan egenskaber sammenligens uafhængigt af deres placering i dokumentet. Begrænsninger på en nodes placeringer er således ikke udelukkende bestemt af deres forælders type, men kan være bestemt ud fra egne børns egenskaber, søskendes børn egenskaber, forældres søskendes børnebørn egenskaber osv. \\
 Schematorn består af følgende:
 \begin{description}
-  \item[Faser] Værende navngivne grupperinger af patterns. Faser er valgfri og undlades de, bliver input testet mod alle mønstre. Faser definers med \texttt{<phase id=phase-id />} elementet og vælger mønstre ud fra deres id. 
+  \item[Faser] Værende navngivne grupperinger af patterns. Faser er valgfri, og undlades de, bliver input testet mod alle mønstre. Faser definers med \texttt{<phase id=phase-id />} elementet og vælger mønstre ud fra deres id. 
   \item[Mønstre] Grupperinger af regeler. For hver mønster bliver én regel evalueret. Navnligt den første som passer på den node, som testes. Mønstre angives med \texttt{<pattern name=pattern-name [id=pattern-id] />} elementet. 
-  \item[Regler] En regel er en samling af assertions, og bestemmer vha. en contekst attribut  hvorvidt den node, der testes, skal udsættes for assertions. Regler beskrives med \texttt{<rule context=xpath />} elementet.
-  \item[Assertions] Disse er som man kender dem fra unittesting. De indeholder en betingelse, udtrykt som en boolean-xpath, og kan enten være positive eller negative udgjort af hhv. \texttt{<assert test=bool-xpath>message</assert>} og \texttt{<report test=bool-xpath>message</report>} elementer.  
-  \item[Diagnostik] Er et valgfrit element, som kan give en mere beskrivende forklaring af eventuelle fejl i koden, for en eller flere assertions. Diagnostikken defineres i \texttt{<diagnostics />} elementet. 
+  \item[Regler] En regel er en samling af assertions og bestemmer vha. en kontekstattribut  hvorvidt den node, der testes, skal udsættes for assertions. Regler beskrives med \texttt{<rule context=xpath />} elementet.
+  \item[Assertions] Disse er, som man kender dem fra unit testing. De indeholder en betingelse udtrykt som en boolean-xpath, og de kan enten være positive eller negative udgjort af hhv. \texttt{<assert test=bool-xpath>message</assert>} og \texttt{<report test=bool-xpath>message</report>} elementer.  
+  \item[Diagnostik] Er et valgfrit element, som kan give en mere beskrivende forklaring af eventuelle fejl i koden for en eller flere assertions. Diagnostikken defineres i \texttt{<diagnostics />} elementet. 
 \end{description}  
 Schematron bruges sjældent som eneste valideringsværktøj, men sammen med schemas. Ligesom schemas bør bruges sammen med Schematron, da de hver især kan udtrykke noget forskellige egenskaber ved XML. 
 \subsection*{Schematron og The Atom Syndication Format}
@@ -114,7 +114,7 @@ The Atom Syndication Format er et XML basert format til beskrivelse af feeds, de
       ]
     ]
 \end{lstlisting}
-og at enhver entry skal have indhold, eller referere til indhold
+og at enhver entry skal have indhold eller referere til indhold
 \begin{lstlisting}
   s:rule [
     context = "atom:entry"
@@ -130,9 +130,7 @@ og at enhver entry skal have indhold, eller referere til indhold
 \end{lstlisting}
 
 \section*{Bonus opgave 6}
-Vi kan validere et XML dokument med respekt til en ``Regular tree grammar'' i lineær tid af input vha. en ``non-deterministic bottom-up'' algoritme  ~\cite[s. 12]{Murata00taxonomyof}. Her udnytter Murata et al.  bl.a. at man kan finde match til regulære udtryk i lineær tid af udtrykket. Men RELAX NG ikke er en ``Regular tree grammar'', da den eksempelvis understøtter en vilkårlig ordning af sine børn gennem \texttt{<interleave>}. Vi kan udtrykke interleave med et regulært udtryk som valget mellem alle sekvens kombinationer. Denne omskrivning vil medføre at udtrykkets længde vil stige eksponentielt, og derved vil den tid det tager at bestemme om en sekvens af børn er gyldig, også stige eksponentielt. Denne udfordring løses i RELAX NG vh.a. en afledning af regulære udtryk skabt af James Clark. Afledning kan afgøres i lineær tid med restriktioner på \texttt{<text />} og refererede elementers navne \footnote{http://relaxng.org/spec-20011203.html\#interleave-restrictions}. Deraf følger at XML dokumenter kan valideres ift. et RELAX NG schema i lineær tid af deres længde. 
-
-
+Vi kan validere et XML dokument med hensyn til en ``Regular tree grammar'' i lineær tid af input vha. en ``non-deterministic bottom-up'' algoritme~\cite[s. 12]{Murata00taxonomyof}. Her udnytter Murata et al. bl.a., at man kan finde match til regulære udtryk i lineær tid af udtrykket. RELAX NG er dog ikke en ``Regular tree grammar'', da den eksempelvis understøtter en vilkårlig ordning af sine børn gennem \texttt{<interleave>}. Vi kan udtrykke interleave med et regulært udtryk som valget mellem alle sekvens kombinationer. Denne omskrivning vil medføre, at udtrykkets længde vil stige eksponentielt, og derved vil den tid det tager at bestemme om en sekvens af børn er gyldig også stige eksponentielt. Denne udfordring løses i RELAX NG vh.a. en afledning af regulære udtryk skabt af James Clark. Afledning kan afgøres i lineær tid med restriktioner på \texttt{<text />} og refererede elementers navne\footnote{http://relaxng.org/spec-20011203.html\#interleave-restrictions}. Deraf følger at XML dokumenter kan valideres ift. et RELAX NG schema i lineær tid af deres længde. 
 \bibliography{main}{}
 \bibliographystyle{plain} 
 
