@@ -1,0 +1,57 @@
+Example 2, første fejl:
+     [java]    Line -1> Result of plug statement is never used.
+Leder efter plug statement, hvis returværdi ikke bliver brugt. Gemmer i stedet i xml variabel.
+     [java]    Line -1> the gap 'WELCOME' is absent
+Kigger i XML og ser, at der ikke er et WELCOME gab, men et GREETING gab. Erstatter derfor WELXOME med GREETING i xact fil.
+     [java]    Line -1> maybe plugging XML data into attribute gap 'EMAIL'
+Har sat bold delen ned i det der bliver "pluget" i GOODBYE. Lavede det andet EMAIL gap til et rigtigt gap.
+     [java]    Line -1> Problem in {http://www.w3.org/1999/xhtml}body created at example.xml:5:8
+     [java]             invalid child a
+     [java]    Line -1> Problem in {http://www.w3.org/1999/xhtml}ul created at example.xml:8:7
+     [java]             invalid child {http://www.w3.org/1999/xhtml}ul
+     [java]    Line -1> Problem in {http://www.w3.org/1999/xhtml}ul created at example.xml:14:7
+     [java]             invalid child {http://www.w3.org/1999/xhtml}ul
+Pas.
+
+Example 2, anden analyze:
+     [java]    Line -1> maybe plugging XML data into attribute gap '0GENERATEDGAP0'
+called getString() on the result of getEmail() to get a String and not an XML file.
+     [java]    Line -1> Problem in {http://www.w3.org/1999/xhtml}body created at example.xml:5:8
+     [java]             invalid child a
+Tilføj namespace til a, så <h:a> i stedet for <a>.
+     [java]    Line -1> Problem in {http://www.w3.org/1999/xhtml}ul created at example.xml:8:12
+     [java]             invalid child {http://www.w3.org/1999/xhtml}ul
+     [java]    Line -1> Problem in {http://www.w3.org/1999/xhtml}ul created at example.xml:14:12
+     [java]             invalid child {http://www.w3.org/1999/xhtml}ul
+Fjerne </h:ul> delen fra addExtraListItems and inclosed the added item in li tags.
+
+Example 3:
+     [java] example.Example3.main
+     [java]    Line -1> Problem in {http://www.w3.org/1999/xhtml}title created at example3.xml:3:10
+     [java]             invalid child h1
+Added namespace h.
+     [java]    Line -1> Problem in {http://www.w3.org/1999/xhtml}body created at example3.xml:5:8
+     [java]             invalid child h1
+     [java]    Line -1> Problem in {http://www.w3.org/1999/xhtml}body created at example3.xml:5:8
+     [java]             invalid child a
+     [java]    Line -1> Problem in {http://www.w3.org/1999/xhtml}body created at example3.xml:5:8
+     [java]             invalid child br
+     [java]    Line -1> Problem in {http://www.w3.org/1999/xhtml}p created at example3.xml:9:16
+     [java]             invalid child div
+     [java]  
+     [java] example.Example3.makePicture
+     [java]    Line -1> the gap 'URL' is absent
+
+
+Example 3:
+     [java] example.Example3.main
+     [java]    Line -1> Problem in {http://www.w3.org/1999/xhtml}p created at example3.xml:9:16
+     [java]             invalid child {http://www.w3.org/1999/xhtml}div
+     [java]    Line -1> Problem in {http://www.w3.org/1999/xhtml}a created at example.Example3.makeTableEntry:?:50
+     [java]             invalid attribute value href="#&#x0;"
+     [java]    Line -1> Problem in {http://www.w3.org/1999/xhtml}a created at example.Example3.makeTableEntry:?:50
+     [java]             invalid child blink
+Blink is deprecated, so so long to that tag.
+     [java]    Line -1> Problem in {http://www.w3.org/1999/xhtml}title created at example3.xml:3:10
+     [java]             invalid child {http://www.w3.org/1999/xhtml}h1
+removed h1 (which we just gave a qualified name)

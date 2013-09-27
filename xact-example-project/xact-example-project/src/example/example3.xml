@@ -1,0 +1,11 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title><[TITLE]></title>
+	</head>
+	<body>
+            <h1><[TITLE]></h1>
+            <[TABLE]>
+            Pictures:
+                <[GALLERY]>
+        </body>
+</html>
