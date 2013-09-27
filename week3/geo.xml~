@@ -1,8 +1,0 @@
-<!--Assume that we are developing an XML language for geographic information. 
-In this language, the contents of an element named point must consist of elements of the following names: address, latitude, longitude, and note. 
-In every such content sequence, the element names address, latitude, and longitude may each occur zero or once; latitude may appear if and only if longitude appears; either address or latitude must appear, but never both; and there may be any number of note elements anywhere in the sequence. -->
-<!ELEMENT point (address?, latitude?, longitude? , note)>
-<!ELEMENT address (#PCDATA)>
-<!ELEMENT latitude (#PCDATA)>
-<!ELEMENT longitude (#PCDATA)>
-<!ELEMENT note (#PCDATA)>

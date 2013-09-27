@@ -1,6 +1,0 @@
-
-<test xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="invalid.xsd">
-  <same>god</same>
-  <needLookAhead>damn</needLookAhead>
-</test>
