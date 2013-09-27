@@ -1,0 +1,20 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title><[TITLE]></title>
+	</head>
+	<body>
+	      <[GREETING]>
+	      <h1>Burger recipe</h1>
+	      <ul>
+		<li>Beef</li>
+		<li>Ketchup</li>
+		<li>Iceberg</li>
+	      </ul>
+	      <h1>Spaghetti recipe</h1>
+	      <ul>
+		<li>Spaghetti</li>
+		<li>Ketchup</li>
+	      </ul>
+	      <[GOODBYE]>
+	</body>
+</html>

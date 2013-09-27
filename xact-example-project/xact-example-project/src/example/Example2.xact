@@ -27,7 +27,7 @@ public class Example2 {
 		xml = xml.plug("TITLE","Amazing recipes");
 		XML result = addExtraListItems(xml, [[Spiced ham]])
 			.plug("GREETING", "Behold my collection of recipes!")
-			.plug("GOODBYE", [[Please send more recipes to <h:a href={"mailto:"+getEmail().getString()}><h:b><[EMAIL]></h:b></a>]])
+			.plug("GOODBYE", [[Please send more recipes to <h:a href={"mailto:"+getEmail().getString()}><h:b><[EMAIL]></h:b></h:a>]])
 			.plug("EMAIL", getEmail())
 			.close();
 		

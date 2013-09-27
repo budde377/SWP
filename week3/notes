@@ -64,7 +64,7 @@ I DTD ser det ud til at virke fint? :S
 
 
 3) Why does XML Schema have the "unique interpretations" property and RELAX NG does not? That is, what are the features in XML Schema that imply this property? Give an example of a RELAX NG schema that doesn't have the property.
-
+Ved entydig fortolkning er det let at lave hurtig validering, hvor det i RELAX NG ikke er åbenlyst, hvordan man gør det.
 
 4) How can the XML Schema complex-type derivation features "restriction" and "extension" be encoded in RELAX NG? And how about the "substitution group" mechanism?
 

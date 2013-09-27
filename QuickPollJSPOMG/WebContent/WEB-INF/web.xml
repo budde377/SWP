@@ -2,10 +2,10 @@
 
   <display-name>Quick Poll</display-name>
   
-    <servlet-mapping>
-  	<servlet-name>Ask</servlet-name>
-  	<url-pattern>/ask</url-pattern>
-  </servlet-mapping>
+   	<servlet-mapping>
+  		<servlet-name>Ask</servlet-name>
+  		<url-pattern>/ask</url-pattern>
+  	</servlet-mapping>
   <servlet>
   	<servlet-name>Ask</servlet-name>
   	<jsp-file>/QuickPollAsk.jsp</jsp-file>

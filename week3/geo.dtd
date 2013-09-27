@@ -1,5 +1,0 @@
-<!ELEMENT point (note*, ( address | (latitude, note*, longitude) | (longitude, note*, latitude)), note*)>
-<!ELEMENT address (#PCDATA)>
-<!ELEMENT latitude (#PCDATA)>
-<!ELEMENT longitude (#PCDATA)>
-<!ELEMENT note (#PCDATA)>
