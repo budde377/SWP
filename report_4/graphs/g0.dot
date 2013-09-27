@@ -1,0 +1,15 @@
+digraph G{
+	
+	node [shape= circle, width=1, fixedsize=true];
+	rankdir="LR";
+	start -> guess;
+	guess -> guess;
+	guess -> hiscore;
+	guess -> done;
+	hiscore -> thanks;
+	thanks[label="t.hanks"];
+	report
+	
+	
+	
+}

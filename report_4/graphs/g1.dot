@@ -1,0 +1,11 @@
+digraph G{
+	
+	node [shape= circle, width=1, fixedsize=true];
+	rankdir="LR";
+	start -> play;
+	play -> play;
+	report
+	
+	
+	
+}
