@@ -1,5 +1,0 @@
-<!DOCTYPE test SYSTEM "invalid.dtd">
-<test>
-  <same>god</same>
-  <needLookAhead>damn</needLookAhead>
-</test>

@@ -1,9 +1,80 @@
 2) How is the requirement about deterministic content models stated in the DTD standard? How does it relate to the Unique Particle Attribution rule in XML Schema? How is the Element Declarations Consistent (EDC) rule stated in the XML Schema spec? Additionally, explain in your own words what these requirements mean. How do DTD / XML Schema validation tools behave on schemas that violate these requirements?
 
+DTD:
+"E Deterministic Content Models (Non-Normative)
+
+As noted in 3.2.1 Element Content, it is required that content models in element type declarations be deterministic. This requirement is for compatibility with SGML (which calls deterministic content models "unambiguous"); XML processors built using SGML systems may flag non-deterministic content models as errors.
+
+For example, the content model ((b, c) | (b, d)) is non-deterministic, because given an initial b the XML processor cannot know which b in the model is being matched without looking ahead to see which element follows the b. In this case, the two references to b can be collapsed into a single reference, making the model read (b, (c | d)). An initial b now clearly matches only a single name in the content model. The processor doesn't need to look ahead to see what follows; either c or d would be accepted.
+
+More formally: a finite state automaton may be constructed from the content model using the standard algorithms, e.g. algorithm 3.5 in section 3.9 of Aho, Sethi, and Ullman [Aho/Ullman]. In many such algorithms, a follow set is constructed for each position in the regular expression (i.e., each leaf node in the syntax tree for the regular expression); if any position has a follow set in which more than one following position is labeled with the same element type name, then the content model is in error and may be reported as an error.
+
+Algorithms exist which allow many but not all non-deterministic content models to be reduced automatically to equivalent deterministic models; see Brüggemann-Klein 1991 [Brüggemann-Klein]."
+-- http://www.w3.org/TR/REC-xml/#determinism
+
+"The content of an element matches a content model if and only if it is possible to trace out a path through the content model, obeying the sequence, choice, and repetition operators and matching each element in the content against an element type in the content model. For compatibility, it is an error if the content model allows an element to match more than one occurrence of an element type in the content model. For more information, see E Deterministic Content Models."
+-- http://www.w3.org/TR/REC-xml/#sec-element-content
+
+
+XML Schema:
+"Schema Component Constraint: Unique Particle Attribution
+A content model must be formed such that during ·validation· of an element information item sequence, the particle component contained directly, indirectly or ·implicitly· therein with which to attempt to ·validate· each item in the sequence in turn can be uniquely determined without examining the content or attributes of that item, and without any information about the items in the remainder of the sequence.
+Note: This constraint reconstructs for XML Schema the equivalent constraints of [XML 1.0 (Second Edition)] and SGML. Given the presence of element substitution groups and wildcards, the concise expression of this constraint is difficult, see Analysis of the Unique Particle Attribution Constraint (non-normative) (§H) for further discussion.
+Since this constraint is expressed at the component level, it applies to content models whose origins (e.g. via type derivation and references to named model groups) are no longer evident. So particles at different points in the content model are always distinct from one another, even if they originated from the same named model group.
+
+Note: Because locally-scoped element declarations may or may not have a {target namespace}, the scope of declarations is not relevant to enforcing either of the two preceding constraints.
+The following constraints define relations appealed to elsewhere in this specification."
+-- http://www.w3.org/TR/xmlschema-1/#cos-nonambig
+
+De to er cirkus det samme.
+
+EDC i 1.0 spec:
+"Schema Component Constraint: Element Declarations Consistent
+If the {particles} contains, either directly, indirectly (that is, within the {particles} of a contained model group, recursively) or ·implicitly· two or more element declaration particles with the same {name} and {target namespace}, then all their type definitions must be the same top-level definition, that is, all of the following must be true:
+1 all their {type definition}s must have a non-·absent· {name}.
+2 all their {type definition}s must have the same {name}.
+3 all their {type definition}s must have the same {target namespace}."
+-- http://www.w3.org/TR/xmlschema-1/#cos-element-consistent
+
+EDC i 1.1 spec:
+"3.8.6.3 Element Declarations Consistent
+
+Schema Component Constraint: Element Declarations Consistent
+If the {particles} property contains, either directly, indirectly (that is, within the {particles} property of a contained model group, recursively), or ·implicitly·, two or more element declarations with the same expanded name, then all their type definitions must be the same top-level definition, that is, all of the following must be true:
+1 All their declared {type definition}s have a ·non-absent· {name}.
+2 All their declared {type definition}s have the same {name}.
+3 All their declared {type definition}s have the same {target namespace}.
+4 All their {type table}s are either all ·absent· or else all are present and have the same sequence of {alternatives} and the same {default type definition}.
+If all of the following are true:
+1 The {particles} property contains (either directly, indirectly, or ·implicitly·) one or more element declarations with the same expanded name Q; call these element declarations EDS.
+2 At least	one of the following is true
+2.1 The {particles} property contains one or more strict or lax ·wildcard particles· which ·match· Q.
+2.2 The Model Group is the {term} of the ·content model· of some Complex Type Definition CTD and CTD.{content type} has an {open content} with a strict or lax Wildcard which ·matches· Q.
+3 There exists a top-level element declaration G with the expanded name Q.
+then the {type table}s of EDS and the {type table} of G must either all be ·absent· or else all be present and have the same sequence of {alternatives} and the same {default type definition}.
+[Definition:]  A list of particles implicitly contains an element declaration if and only if a member of the list contains that element declaration in its ·substitution group·."
+-- http://www.w3.org/TR/2009/WD-xmlschema11-1-20090130/#cos-element-consistent
+
+Reglen siger, at hvis der er to elementer med samme på "samme niveau" eller under (enten direkte eller indirekte), så skal de være "ens".
+
+Reglerne betyder, at der ikke må være tvetydighed når man tjekker xml mod specifiktaion, som kun kan løses ved look ahead.
+
+Ved tvetydihed med XML Schema quality checker fra webtek side, der tager den en af mulighederne og tjekker om det passer, hvis det gør accepterer den, hvis ikke rejecter den. Den tjekker altså kun en "gren" i træet. Den tjekker altså ikke om der er tvetydighed og prøver at tjekke.
+I DTD ser det ud til at virke fint? :S
+
+
 3) Why does XML Schema have the "unique interpretations" property and RELAX NG does not? That is, what are the features in XML Schema that imply this property? Give an example of a RELAX NG schema that doesn't have the property.
+
 
 4) How can the XML Schema complex-type derivation features "restriction" and "extension" be encoded in RELAX NG? And how about the "substitution group" mechanism?
 
+substitution groups see combine
+restriction: create new pattern corresponding to restriction.
+extension: define new type, use ref to ref the type we want extended
+-- http://eric.van-der-vlist.com/blog/2006/07/06/2814_relax_ng_and_w3c_xml_schema_compared_continued/
+konklusion, nogle af de "behagelige" ting fra XML Schema er væk, men man kan stadig udtrykke det samme.
+
 5) Give a brief description of Schematron (expected: one page excluding examples). Explain how Schematron is used in the RELAX NG schema for The Atom Syndication Format.
+
 
 6) Bonus: How can validation with RELAX NG be done in linear time (as claimed in the lecture)? Hint: see Taxonomy of XML schema languages using formal language theory.
