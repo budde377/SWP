@@ -1,0 +1,39 @@
+package example;
+
+import dk.brics.xact.*;
+import dk.brics.xact.operations.*;
+
+public class Example2 {
+	
+	// this class contains some intentional errors, to demonstrate
+	// what kind of problems the static analysis can detect
+	
+	static {
+		XML.getNamespaceMap().put("h", "http://www.w3.org/1999/xhtml");
+		XML.loadXMLSchema("file:schemas/xhtml1-transitional.dtd");
+	}
+	
+	public static XML addExtraListItems(XML xml, XML itemToInsert) {
+		return xml.appendContent("//h:ul", [[<h:li><[INSERT]></h:li>]].plug("INSERT",itemToInsert.getString()));
+	}
+	
+	public static XML getEmail() {
+		return [[nobody@example.com]]; // yay bold my email address
+	}
+	
+	public static void main(String[] args) {
+		XML xml = XML.parseTemplateResource(Example2.class, "example.xml");
+		
+		xml = xml.plug("TITLE","Amazing recipes");
+		XML result = addExtraListItems(xml, [[Spiced ham]])
+			.plug("GREETING", "Behold my collection of recipes!")
+			.plug("GOODBYE", [[Please send more recipes to <h:a href={getEmail().getString()}><h:b><[EMAIL]></h:b></a>]])
+			.plug("EMAIL", getEmail())
+			.close();
+		
+		result.analyze("h:html");
+		
+		System.out.println(result.toTemplate(XMLIndentation.XHTML));
+	}
+	
+}

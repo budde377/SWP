@@ -1,0 +1,14 @@
+<datalist>
+    <entry>
+        <caption>Climbing Mount Everest</caption>
+        <name>everest.jpg</name>
+    </entry>
+    <entry>
+        <caption>Jumping from space</caption>
+        <name>space.jpg</name>
+    </entry>
+    <entry>
+        <caption>Landing on the Red Square</caption>
+        <name>redsquare.jpg</name>
+    </entry>
+</datalist>

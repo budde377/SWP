@@ -1,0 +1,41 @@
+<project name="XactExample">
+	
+	<property name="build-dir" value="bin"/>
+	<property name="xact-src-dir" value="src"/>
+	<property name="xact-jar" value="lib/xact-all.jar"/>
+	<property name="generated" value="generated"/>
+	
+    <target name="xact-to-java">
+        <java 	classname="dk.brics.xact.compiler.Main" 
+        		fork="true"
+        		failonerror="true">
+        	<classpath path="${xact-jar}"/>
+        	<classpath path="${build-dir}"/>
+        	<arg value="-dir=${xact-src-dir}"/>
+        	<arg value="-out=${generated}"/>
+    	</java>
+        <copy todir="${generated}">
+            <fileset dir="src" includes="**/*.xml"/>
+        </copy>
+    	<echo>Done! Now remember to refresh the 'generated' folder in Eclipse.</echo>
+    </target>
+
+    <target name="compile" depends="xact-to-java">
+        <javac srcdir="${generated}" includes="**" source="1.6" target="1.6" destdir="${build-dir}" optimize="${optimize}" debug="${debug}">
+            <classpath path="${xact-jar}"/>
+		</javac>
+        <copy todir="${build-dir}">
+           <fileset dir="${generated}" includes="**/*.xml"/>
+        </copy>
+    </target>
+	
+	<target name="analyze" depends="compile">
+		<java classname="dk.brics.xact.analysis.Main" fork="true">
+        	<classpath path="${xact-jar}"/>
+			<classpath path="${build-dir}"/>
+			<arg value="-dir=${build-dir}"/>
+			<jvmarg value="-Xmx512m"/>
+		</java>
+	</target>
+	
+</project>
