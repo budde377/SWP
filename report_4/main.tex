@@ -1,0 +1,47 @@
+% Dokumentklassen sættes til memoir.
+% Manual: http://ctan.org/tex-archive/macros/latex/contrib/memoir/memman.pdf
+\documentclass[a4paper,10pt]{article}
+\usepackage[a4paper]{geometry}
+% Danske udtryk (fx figur og tabel) samt dansk orddeling og fonte med
+
+% danske tegn. Hvis LaTeX brokker sig over æ, ø og å skal du udskifte
+% "utf8" med "latin1" eller "applemac". 
+\usepackage[utf8]{inputenc}
+\usepackage[danish]{babel}
+\usepackage[T1]{fontenc}
+ 
+\usepackage{cite}
+\usepackage{natbib}
+% Matematisk udtryk, fede symboler, theoremer og fancy ting (fx kædebrøker)
+\usepackage{amsmath,amssymb}
+\usepackage{bm}
+\usepackage{amsthm}
+\usepackage{tikz}
+%\usepackage{mathtools}
+% Kodelisting. Husk at læse manualen hvis du vil lave fancy ting.
+% Manual: http://mirror.ctan.org/macros/latex/contrib/listings/listings.pdf
+\usepackage{listings}
+\usepackage{verbatim}
+ 
+% Fancy ting med enheder og datatabeller. Læs manualen til pakken
+% Manual: http://www.ctan.org/tex-archive/macros/latex/contrib/siunitx/siunitx.pdf
+%\usepackage{siunitx}
+% Indsættelse af grafik.
+\usepackage{graphicx}
+%\usepackage{bussproofs}
+
+% Reaktionsskemaer. Læs manualen for at se eksempler.
+% Manual: http://www.ctan.org/tex-archive/macros/latex/contrib/mhchem/mhchem.pdf
+%\usepackage[version=3]{mhchem}
+\author{Lau Skorstengaard, 20103173 \\Christian Budde Christensen, 20103616}
+\title{Serverbaseret Webprogrammering\\4. Aflevering}
+
+\begin{document}
+\maketitle
+
+\bibliography{main}{}
+\bibliographystyle{plain} 
+
+ 
+\end{document}
+
