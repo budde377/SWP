@@ -48,7 +48,7 @@ I den næste række opgaver, der handlede om Client-State Manipulation blev det 
 I Path Traversal delen løb vi først ind i lidt browser problemer, da chromium var meget glad for at optimere på vores forespørgelse inden den blev sendt. En erfaring, vi kunne tage med fra dette er, at det kan være en god ide, at hvis man vil teste sin webserver manuelt, så er det en god ide at bruge værktøjer, som gør præcist det, man beder dem om.
 
 Udover de mange gode råd, som Google folkene præsenterer i løbet af opgaverne, og som vi ikke vil gengive her, så sidder man lidt med en følelse af, at det ville være rart, at man slap for at tænke på alle sikkerhedshullerne. Det for selvfølgelig tankerne over på JWIG, hvor et af design målene netop er ``secure by design''. Man kunne derfor ønske, at JWIG var mere udbredt, så det faktisk kunne blive tåleligt at lave noget seriøst i.
-
- 
+\section*{Guessing Game revised}
+En gennemgang af begge implementationer afslørede at begge implementationer rengjorde alt input. Det vil sige at de erstattede \texttt{<},  \texttt{>} og  \texttt{"}  med hhv. \texttt{\&lt;}, \texttt{\&gt;} og \texttt{\&quot;} hvormed applikationerne ``sikret'' mod \texttt{XSS} angreb. Dessuden var JSF implementationen sikret mod XSRF angreb ved implementere \texttt{javax.faces.ViewState} som en hidden field i alle formularer. Struts implementationen havde ikke en sådan feature, og vi implementedere derfor et token, som blev gemt i session, og sendt med i alle formularer som et hidden field. Passede det gemte token ikke overens med det modtaget i POST-data, blev brugeren vidresendt til en fejlside. 
 \end{document}
 
