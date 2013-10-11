@@ -1,0 +1,54 @@
+% Dokumentklassen sættes til memoir.
+% Manual: http://ctan.org/tex-archive/macros/latex/contrib/memoir/memman.pdf
+\documentclass[a4paper,10pt]{article}
+\usepackage[a4paper]{geometry}
+% Danske udtryk (fx figur og tabel) samt dansk orddeling og fonte med
+
+% danske tegn. Hvis LaTeX brokker sig over æ, ø og å skal du udskifte
+% "utf8" med "latin1" eller "applemac". 
+\usepackage[utf8]{inputenc}
+\usepackage[danish]{babel}
+\usepackage[T1]{fontenc}
+ 
+\usepackage{cite}
+\usepackage{natbib}
+% Matematisk udtryk, fede symboler, theoremer og fancy ting (fx kædebrøker)
+\usepackage{amsmath,amssymb}
+\usepackage{bm}
+\usepackage{amsthm}
+\usepackage{tikz}
+%\usepackage{mathtools}
+% Kodelisting. Husk at læse manualen hvis du vil lave fancy ting.
+% Manual: http://mirror.ctan.org/macros/latex/contrib/listings/listings.pdf
+\usepackage{listings}
+\usepackage{verbatim}
+ 
+% Fancy ting med enheder og datatabeller. Læs manualen til pakken
+% Manual: http://www.ctan.org/tex-archive/macros/latex/contrib/siunitx/siunitx.pdf
+%\usepackage{siunitx}
+% Indsættelse af grafik.
+\usepackage{graphicx}
+%\usepackage{bussproofs}
+
+% Reaktionsskemaer. Læs manualen for at se eksempler.
+% Manual: http://www.ctan.org/tex-archive/macros/latex/contrib/mhchem/mhchem.pdf
+%\usepackage[version=3]{mhchem}
+\author{Lau Skorstengaard, 20103173 \\Christian Budde Christensen, 20103616}
+\title{Serverbaseret Webprogrammering\\5. Aflevering}
+
+\begin{document}
+\maketitle
+\section*{Oplevelser med Gruyere applikationen}
+I forbindelse med Gruyere blev øvelserne gennemgået fra en ende af frem til og med path traversal. I løbet af opgaverne så vi, at der er et hav af ting, man skal huske at tage højde for. De foreslåede løsninger viste også, at man let kan lave et fiks, som umiddelbart virke, men hvor det der stadig er et sikkerhedshul, hvis man er lidt kreativ. Overordnet set, så blev de fleste opgaver i sidste ende løst ved at bruge hints mv., da vi tit sad med den rigtige ide, men ikke helt kunne føre den ud i livet. Nogle af opgaverne blev også besværlig gjort af, at nogle moderne browsere forsøger på at hjælpe med at forhindre eksempelvis Cross-Site Scripting. Dog var der i alle tilfælde et lille hack, man kunne bruge til at omgå denne lille sikkerhed, hvilket viste, at man ikke bør stole på, at browseren sikrer enn mod angreb. Følgende er en kort beskrivelse af nogle af de ting, vi oplevede i forbindelse med nogle af opgaverne.
+
+De første opgaver handlede om Cross-Site Scripting, hvilket basalt set kan koges ned til, hvordan kan jeg få lov at afvikle uautoriseret Javascript. Opgaverne viser en lang række forskellige måder at få afviklet Javascript, hvilket lidt forudsætter, at man har et kendskab til, hvilket konventionelle såvel som ukonventionelle metoder, der er at afvikle Javascript på i en browser. Efter opgaverne sad man også lidt med en følelse af, at hvis browserne var mere strenge og ikke forsøgte at fortolke på det de skal vise, når det ikke er gyldig html, så ville livet være lidt lettere.
+
+I den næste række opgaver, der handlede om Client-State Manipulation blev det fint illustreret, at man ikke bør stole på data, der har været forbi brugeren, og at det ikke er nok at lave Client-side validation. Et fint eksempel på, at Client side validation ikke er nok, er ekstra opgaven i anden del, hvor man kan lave sit eget request til serveren, der omgår de restrektioner, der bliver lavet på klient siden. 
+
+I Path Traversal delen løb vi først ind i lidt browser problemer, da chromium var meget glad for at optimere på vores forespørgelse inden den blev sendt. En erfaring, vi kunne tage med fra dette er, at det kan være en god ide, at hvis man vil teste sin webserver manuelt, så er det en god ide at bruge værktøjer, som gør præcist det, man beder dem om.
+
+Udover de mange gode råd, som Google folkene præsenterer i løbet af opgaverne, og som vi ikke vil gengive her, så sidder man lidt med en følelse af, at det ville være rart, at man slap for at tænke på alle sikkerhedshullerne. Det for selvfølgelig tankerne over på JWIG, hvor et af design målene netop er ``secure by design''. Man kunne derfor ønske, at JWIG var mere udbredt, så det faktisk kunne blive tåleligt at lave noget seriøst i.
+\section*{Guessing Game revised}
+En gennemgang af begge implementationer afslørede at begge implementationer rengjorde alt input. Det vil sige at de erstattede \texttt{<},  \texttt{>} og  \texttt{"}  med hhv. \texttt{\&lt;}, \texttt{\&gt;} og \texttt{\&quot;} hvormed applikationerne ``sikret'' mod \texttt{XSS} angreb. Dessuden var JSF implementationen sikret mod XSRF angreb ved implementere \texttt{javax.faces.ViewState} som en hidden field i alle formularer. Struts implementationen havde ikke en sådan feature, og vi implementedere derfor et token, som blev gemt i session, og sendt med i alle formularer som et hidden field. Passede det gemte token ikke overens med det modtaget i POST-data, blev brugeren vidresendt til en fejlside. 
+\end{document}
+
